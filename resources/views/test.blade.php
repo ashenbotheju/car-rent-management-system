@@ -32,6 +32,8 @@
         <x-footer />
 
     </div>
-    
+
+<body>
+    <x-footer />
 </body>
 </html>
