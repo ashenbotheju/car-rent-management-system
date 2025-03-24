@@ -19,9 +19,18 @@
             <x-car-card />
             <x-car-card />
             <x-car-card />
-            
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
         </div>
         <x-footer />
+
     </div>
     
 </body>
