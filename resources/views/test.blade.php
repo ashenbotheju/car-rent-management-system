@@ -8,6 +8,6 @@
     @vite(['resources/css/app.css'])
 </head>
 <body>
-    <x-car-card />
+    <x-footer />
 </body>
 </html>
