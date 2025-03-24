@@ -8,6 +8,27 @@
     @vite(['resources/css/app.css'])
 </head>
 <body>
-    <x-car-card />
+    <div class="flexitems-center justify-center min-h-screen container mx-auto">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+            <x-car-card />
+        </div>
+    </div>
+    
 </body>
 </html>
