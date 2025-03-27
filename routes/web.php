@@ -1,22 +1,26 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\SocialController;
+use App\Models\User;
+use Laravel\Socialite\Facades\Socialite;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
-
-//for testing purpose
+// Test Route (for debugging) @botheju
 Route::get('/test', function () {
     return view('test');
+});
+
+// Google Authentication Routes using SocialController @bimsara
+Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
+Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
+
+// Admin Routes  @bimsara
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });
