@@ -89,7 +89,7 @@
                 {{-- Login Redirect --}}
                 <p class="text-center text-gray-500 dark:text-gray-400 text-sm mt-4">
                     Already have an account?
-                    <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Sign in</a>
+                    <a href="{{ route('login') }}" class="text-blue-500 hover:underline">Log in</a>
                 </p>
         </div>
     </div>
