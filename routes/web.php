@@ -34,7 +34,4 @@ Route::get('/test', function () {
 Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 
-// Admin Routes  @bimsara
-Route::middleware(['auth', 'admin'])->group(function () {
-    Route::get('admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-});
+
