@@ -1,0 +1,34 @@
+@extends('layouts.app')
+@section('title', 'Wenujaya Rent a Car - Fleet')
+@section('content')
+    <div class="container py-25 mt-20 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <!-- Page Heading Section -->
+        <div class="text-center mb-12">
+            {{-- <h6 class="text-indigo-600 text-base font-medium uppercase tracking-wider mb-2">Our Fleet</h6> --}}
+            <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl font-manrope">
+                Explore Our Premium Vehicle Collection
+            </h2>
+            <p class="mt-4 text-lg text-gray-600 max-w-3xl mx-auto">
+                Choose from our wide selection of well-maintained vehicles for every travel need. 
+                Whether you're looking for economy, comfort, or luxury, we have the perfect vehicle for your journey.
+            </p>
+        </div>
+
+        <!-- Vehicle Grid Section -->
+        <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+            @for($i = 0; $i < 10; $i++)
+                <x-car-card />
+            @endfor
+        </div>
+
+        <!-- Call to Action -->
+        <div class="mt-12 text-center">
+            <button class="group px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-lg shadow transition-all duration-300 inline-flex items-center">
+                <span class="text-white text-base font-medium leading-6">View All Vehicles</span>
+                <svg class="ml-2 group-hover:translate-x-1 transition-all duration-300" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                    <path d="M6.6665 5L13.3332 10L6.6665 15" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
+@endsection

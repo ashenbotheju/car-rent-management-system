@@ -3,7 +3,8 @@
         <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
             {{-- Logo --}}
             <div class="flex justify-center mb-6">
-                <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-40 h-40"> <!-- Adjust logo size -->
+                {{-- <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-40 h-40"> <!-- Adjust logo size --> --}}
+                <x-logo />
             </div>
 
             {{-- Forgot Password Text --}}
