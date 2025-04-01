@@ -1,10 +1,11 @@
 <x-guest-layout>
-    <div class="flex min-h-screen items-center justify-center bg-gray-100 dark:bg-gray-900">
+    <div class="flex min-h-screen items-center justify-center dark:bg-gray-900">
         <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
 
             <!-- Logo -->
             <div class="flex justify-center">
-                <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-40 h-40">
+                {{-- <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-40 h-40"> --}}
+                <x-logo />
             </div>
 
             <!-- Heading -->

@@ -4,7 +4,8 @@
 
             {{-- Logo --}}
             <div class="flex justify-center mb-6">
-                <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-14 h-14">
+                {{-- <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-14 h-14"> --}}
+                <x-logo />
             </div>
 
             {{-- Heading --}}
