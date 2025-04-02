@@ -2,7 +2,7 @@
 @section('title', 'Car Rental - Home')
 @section('content')
 <section class="py-16 xl:mr-0 lg:mr-5 mr-0">
-  <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto mt-10">
+  <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto mt-20">
       <div class="w-full justify-start items-center xl:gap-12 gap-10 grid lg:grid-cols-2 grid-cols-1">
           <div class="w-full flex-col justify-center lg:items-start items-center gap-8 inline-flex">
               <div class="w-full flex-col justify-center items-start gap-8 flex">
