@@ -25,7 +25,7 @@
                               <p class="text-gray-500 text-base font-normal leading-relaxed">Of Trusted Vehicle Rental Experience</p>
                           </div>
                           <div class="w-full h-full p-5 rounded-xl border border-gray-200 hover:border-indigo-300 bg-white transition-all duration-300 flex-col justify-start items-start gap-2.5 inline-flex">
-                              <h4 class="text-gray-900 text-2xl font-bold font-manrope leading-9">40+ Vehicles</h4>
+                              <h4 class="text-gray-900 text-2xl font-bold font-manrope leading-9">15+ Vehicles</h4>
                               <p class="text-gray-500 text-base font-normal leading-relaxed">Modern Fleet to Meet Every Need</p>
                           </div>
                       </div>

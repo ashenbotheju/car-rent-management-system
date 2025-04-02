@@ -38,7 +38,7 @@
       <div id="mobile-menu-backdrop" class="fixed inset-0 bg-gray-900/50 transition-opacity duration-300 opacity-0"></div>
       
       <!-- Menu panel that slides in from the right -->
-      <div class="fixed inset-0 right-0 z-50 w-full max-w-sm overflow-y-auto bg-white px-6 py-6 transition-transform duration-300 transform translate-x-full">
+      <div class="fixed inset-y-0 right-0 z-50 w-full max-w-sm overflow-y-auto bg-white px-6 py-6 transition-transform duration-300 transform translate-x-full">
         <div class="flex items-center justify-between">
           <a href="" class="-m-1.5 p-1.5">
             <span class="sr-only">Your Company</span>

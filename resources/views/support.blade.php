@@ -67,7 +67,7 @@
     }
 </style>
 
-<section class="py-16 bg-white">
+<section class="py-16">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 mt-10">
         <div class="mb-12 text-center">
             <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl">
