@@ -34,7 +34,7 @@
 
                 {{-- Submit Button --}}
                 <div class="flex items-center justify-end mt-4">
-                    <x-button class="w-full items-center justify-center">
+                    <x-button class="w-full items-center justify-center ">
                         {{ __('Email Password Reset Link') }}
                     </x-button>
                 </div>

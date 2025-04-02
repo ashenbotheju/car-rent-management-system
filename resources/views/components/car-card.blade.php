@@ -23,6 +23,9 @@
             <span class="text-gray-700 font-bold dark:text-gray-200">4</span>
         </div>
     </div>
+    <div>
+        <p class="text-lg"><strong>Available</strong></p>
+    </div>
 
     <div>
         <div class="flex items-center justify-between mt-2 text-gray-700 dark:text-gray-200">
