@@ -1,13 +1,14 @@
 <?php
 
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\VehicleController;
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\SocialController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\MailController;
 use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\SocialController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\Admin\DashboardController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -34,4 +35,10 @@ Route::get('/test', function () {
 Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
 Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 
+// Profile routes (required by Jetstream)
+// Route::middleware(['auth'])->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+//     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+// });
 
+//Route::get('send-mail', [MailController::class, 'index']);
