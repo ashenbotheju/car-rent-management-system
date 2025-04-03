@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Filament\Panel;
 use Laravel\Sanctum\HasApiTokens;
 use Laravel\Jetstream\HasProfilePhoto;
@@ -12,13 +11,15 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements FilamentUser,MustVerifyEmail
+class User extends Authenticatable implements FilamentUser
 {
     use HasApiTokens;
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+
+    // Role constants (store in uppercase in DB)
     const ROLE_ADMIN = 'ADMIN';
     const ROLE_USER = 'USER';
     const ROLE_DEFAULT = self::ROLE_USER;
@@ -32,9 +33,34 @@ class User extends Authenticatable implements FilamentUser,MustVerifyEmail
         'name',
         'email',
         'password',
-        'role',
+        'role', // Make sure role is fillable
     ];
 
+    // Mutator to ensure role is always stored in uppercase
+    public function setRoleAttribute($value)
+    {
+        $this->attributes['role'] = strtoupper(trim($value));
+    }
+
+    // Check if user has admin role (case insensitive check)
+    public function isAdmin(): bool
+    {
+        return strtoupper($this->role) === self::ROLE_ADMIN;
+    }
+
+    // Check if user has any of the admin variations
+    public function isAnyAdmin(): bool
+    {
+        return in_array(strtoupper($this->role), [
+            strtoupper(self::ROLE_ADMIN),
+            'ADMINISTRATOR', // Add other variations if needed
+        ]);
+    }
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->isAdmin(); // Use the case-insensitive check
+    }
 
     protected $hidden = [
         'password',
@@ -43,26 +69,9 @@ class User extends Authenticatable implements FilamentUser,MustVerifyEmail
         'two_factor_secret',
     ];
 
-    /**
-     * The accessors to append to the model's array form.
-     *
-     * @var array<int, string>
-     */
     protected $appends = [
         'profile_photo_url',
     ];
-
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-
-    public function canAccessPanel(Panel $panel): bool
-    {
-        return $this->can('viewAdmin',User::class);
-    }
-
 
     protected function casts(): array
     {
@@ -71,9 +80,4 @@ class User extends Authenticatable implements FilamentUser,MustVerifyEmail
             'password' => 'hashed',
         ];
     }
-    public function isAdmin(): bool
-    {
-        return $this->role  == self::ROLE_ADMIN;
-    }
-
 }
