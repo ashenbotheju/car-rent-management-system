@@ -23,7 +23,8 @@
       </div>
       <div class="hidden lg:flex lg:flex-1 lg:justify-end">
         @auth
-          <a class="text-sm/6 font-semibold text-gray-900 " href="{{route('logout')}}">Logout</a>
+          <a class="text-sm/6 font-semibold text-gray-900  " href="{{route('logout')}}">Logout</a>
+          <a class="text-sm/6 font-semibold text-gray-900 ml-10" href="{{route('logout')}}"><img class="w-6 h-6 mr-2" src="{{ asset('../images/car/user_profile.svg')}}"></a>
         @else
         <a href="{{ route('login')}}" class="text-sm/6 font-semibold text-gray-900 ">Log in </a>
         <p class="text-sm/6 font-semibold text-gray-900 mr-2 ml-2">|</p>
@@ -61,8 +62,13 @@
               <a href="{{ route('showAbout')}}" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold text-gray-900 hover:bg-gray-50">About Us</a>
             </div>
             <div class="py-6">
+              @auth
+              <a class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50" href="{{route('logout')}}">Logout</a>
+              <a class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50" href="{{route('logout')}}">Profile</a>              
+              @else
               <a href="{{ route('login')}}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50">Log in</a>
               <a href="{{ route('register')}}" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50">Sign in</a>
+              @endauth
             </div>
           </div>
         </div>
