@@ -80,7 +80,7 @@
                     Register
                 </button> --}}
                 <div class="mt-6">
-                    <x-button class="w-full flex justify-center">
+                    <x-button class="w-full flex justify-center ">
                         Register
                     </x-button>
                 </div>

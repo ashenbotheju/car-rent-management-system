@@ -19,12 +19,14 @@ Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/register', [HomeController::class, 'register'])->name('register');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
-Route::get('/vehicles', [HomeController::class, 'showVehicles'])->name('showVehicles');
+// Route::get('/vehicles', [HomeController::class, 'showVehicles'])->name('showVehicles');
+Route::get('/vehicles', [VehicleController::class, 'vehicles'])->name('showVehicles');
+
 Route::get('/support', [HomeController::class, 'showSupport'])->name('showSupport');
 Route::get('/contact', [HomeController::class, 'showContact'])->name('showContact');
 Route::get('/about', [HomeController::class, 'showAbout'])->name('showAbout');
 
-Route::get('/vehicles/vehicle-overview', [VehicleController::class, 'vehicleOverview'])->name('vehicleOverview');
+Route::get('/vehicles/{vehicle_id}', [VehicleController::class, 'vehicleDetails'])->name('vehicle.details');
 
 // Test Route (for debugging) @botheju
 Route::get('/test', function () {

@@ -1,6 +1,6 @@
 <!-- Message Icon (Initially Hidden) -->
 <div id="message-icon"
-    class="fixed bottom-5 right-5 w-16 h-16 bg-blue-600 text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg opacity-0 transform translate-y-10 transition-all duration-500"
+    class="fixed bottom-5 right-5 w-16 h-16 bg-indigo-600 text-white rounded-full flex items-center justify-center cursor-pointer shadow-lg opacity-0 transform translate-y-10 transition-all duration-500"
     onclick="toggleChatTray()">
     <i class="fas fa-comment-alt text-3xl"></i>
 </div>
@@ -8,7 +8,7 @@
 <!-- Chat Tray (Initially Hidden) -->
 <div id="chat-tray" class="fixed bottom-20 right-5 w-80 bg-white shadow-lg rounded-lg hidden">
     <!-- Header -->
-    <div class="bg-blue-600 text-white p-3 rounded-t-lg flex items-center">
+    <div class="bg-indigo-600 text-white p-3 rounded-t-lg flex items-center">
         <img src="{{ asset('images/VLogo.png') }}" alt="Profile" class="w-10 h-10 rounded-full border border-white mr-2">
         <div>
             <h3 class="text-lg font-semibold">Venujaya Car Rental Service</h3>

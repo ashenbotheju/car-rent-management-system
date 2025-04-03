@@ -73,7 +73,7 @@
 
                 <!-- Login Button -->
                 <div class="mt-6">
-                    <x-button class="w-full flex justify-center">
+                    <x-button class="w-full flex justify-center ">
                         Sign in
                     </x-button>
                 </div>

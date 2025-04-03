@@ -2,7 +2,7 @@
 @section('title', 'Car Rental - Home')
 @section('content')
 <section class="py-16 xl:mr-0 lg:mr-5 mr-0">
-  <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto mt-10">
+  <div class="w-full max-w-7xl px-4 md:px-5 lg:px-5 mx-auto mt-20">
       <div class="w-full justify-start items-center xl:gap-12 gap-10 grid lg:grid-cols-2 grid-cols-1">
           <div class="w-full flex-col justify-center lg:items-start items-center gap-8 inline-flex">
               <div class="w-full flex-col justify-center items-start gap-8 flex">
@@ -25,7 +25,7 @@
                               <p class="text-gray-500 text-base font-normal leading-relaxed">Of Trusted Vehicle Rental Experience</p>
                           </div>
                           <div class="w-full h-full p-5 rounded-xl border border-gray-200 hover:border-indigo-300 bg-white transition-all duration-300 flex-col justify-start items-start gap-2.5 inline-flex">
-                              <h4 class="text-gray-900 text-2xl font-bold font-manrope leading-9">40+ Vehicles</h4>
+                              <h4 class="text-gray-900 text-2xl font-bold font-manrope leading-9">15+ Vehicles</h4>
                               <p class="text-gray-500 text-base font-normal leading-relaxed">Modern Fleet to Meet Every Need</p>
                           </div>
                       </div>
