@@ -13,7 +13,7 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id')->default("1");  // user_id without foreign key
             //foreign ey vehicle id from vehicles table
             $table->unsignedBigInteger('vehicle_id'); // vehicle_id without foreign key
-            $table->foreign('vehicle_id')->references('vehicle_id')->on('vehicles')->onDelete('cascade');
+            //$table->foreign('vehicle_id')->references('vehicle_id')->on('vehicles')->onDelete('cascade');
             $table->date('start_date');
             $table->date('end_date');
             $table->decimal('total_cost', 10, 2);

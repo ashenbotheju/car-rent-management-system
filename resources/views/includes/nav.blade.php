@@ -1,4 +1,4 @@
-<div class="absolute inset-x-0 top-0 z-50 mb-30">
+<div class="absolute inset-x-0 top-0 z-50 mb-8"> <!-- Changed mb-30 to mb-8 -->
     <nav class="flex items-center justify-between p-6 lg:px-40" aria-label="Global">
         <div class="flex lg:flex-1">
             <a href="{{ route('home') }}" class="-m-1.5 p-1.5">
@@ -57,6 +57,7 @@
                     </svg>
                 </button>
             </div>
+
             <div class="mt-6 flow-root">
                 <div class="-my-6 divide-y divide-gray-500/10">
                     <div class="space-y-2 py-6">
@@ -84,7 +85,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> <!-- Added missing closing div -->
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {

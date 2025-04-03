@@ -72,3 +72,4 @@ class Vehicle extends Model
         return $query->where('is_available', true);
     }
 }
+

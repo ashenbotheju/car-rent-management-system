@@ -24,7 +24,7 @@
         @livewireStyles
         @yield('style') 
     </head>
-    <body class="">
+    <body >
         {{-- @yield('content') --}}    
         <div>
             {{ $slot }}
