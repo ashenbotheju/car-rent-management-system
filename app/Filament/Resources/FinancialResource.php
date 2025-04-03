@@ -24,6 +24,7 @@ class FinancialResource extends Resource
         return $form
             ->schema([
                 //
+                //
             ]);
     }
 
