@@ -1,3 +1,4 @@
+
 <div x-data="{ open: false }" class="relative ml-3">
         <!-- Profile button -->
         <button @click="open = !open" type="button"
@@ -49,3 +50,4 @@
             </form>
         </div>
     </div>
+

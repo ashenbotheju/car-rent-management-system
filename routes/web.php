@@ -39,7 +39,6 @@ Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('
 Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 
 
-
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     // ... other routes
