@@ -28,7 +28,9 @@ class ReservationResource extends Resource
 {
     protected static ?string $model = Reservation::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-calendar';
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Form $form): Form
     {
@@ -44,7 +46,7 @@ class ReservationResource extends Resource
                         ->get()
                         ->mapWithKeys(function (Vehicle $vehicle) {
                             return [
-                                $vehicle->vehicle_id => "{$vehicle->brand} {$vehicle->model} (ID: {$vehicle->vehicle_id})"
+                                $vehicle->vehicle_id => "{$vehicle->brand} {$vehicle->model} (Reg: {$vehicle->registration_number})"
                             ];
                         })
                         ->toArray();
@@ -86,12 +88,14 @@ DatePicker::make('end_date')
     ])
     ->helperText('Must be after start date'),
 
-        // Total Cost
-        TextInput::make('total_cost')
-            ->label('Total Cost')
-            ->numeric()
-            ->required(),
+    TextInput::make('total_cost')
+    ->label('Total Cost')
+    ->numeric()
+    ->hidden() 
+    ->default(1500) // Set default value
 
+
+    ,
         // Status (dropdown)
         Select::make('status')
             ->label('Status')
@@ -109,16 +113,11 @@ DatePicker::make('end_date')
     {
         return $table
             ->columns([
-                //
-                  // Reservation ID
-                  TextColumn::make('reservation_id')
-                  ->label('Reservation ID')
-                  ->sortable()
-                  ->searchable(),
+            
   
               // User ID
               TextColumn::make('user.name')
-                  ->label('User ID')
+                  ->label('User Name')
                   ->sortable()
                   ->searchable(),
   
@@ -161,9 +160,7 @@ DatePicker::make('end_date')
             ])
             ->filters([
                 //
-                Filter::make('status')
-                ->label('Show Maintenance Vehicles')
-                ->query(fn (Builder $query) => $query->where('status', 'confirmed'))
+            
        
             ])
             ->actions([
