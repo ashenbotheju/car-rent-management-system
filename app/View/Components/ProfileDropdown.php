@@ -16,7 +16,7 @@ class ProfileDropdown extends Component
      */
     public function __construct()
     {
-        $this->user = Auth::user(); // Use Auth facade instead of auth() helper
+        $this->user = Auth::user(); // Using Auth facade for consistency
     }
 
     /**
