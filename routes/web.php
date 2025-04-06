@@ -10,7 +10,7 @@ use App\Http\Controllers\SocialController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\Admin\DashboardController;
-
+use App\Models\Reservation;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
@@ -43,3 +43,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     // ... other routes
 });
+
+Route::get('/print-daily-revenue', function () {
+    $records = Reservation::query()
+        ->selectRaw('DATE(created_at) as day, SUM(total_cost) as revenue')
+        ->where('status', 'confirmed')
+        ->groupBy('day')
+        ->orderBy('day', 'desc')
+        ->get();
+
+    return view('reports.daily-revenue', compact('records'));
+})->name('print.daily.revenue'); // Important for route() helper
+
