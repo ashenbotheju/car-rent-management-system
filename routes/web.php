@@ -10,6 +10,7 @@ use App\Http\Controllers\SocialController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Models\Reservation;
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
@@ -53,3 +54,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     // Your Jetstream routes here
 });
+
+Route::get('/print-daily-revenue', function () {
+    $records = Reservation::query()
+        ->selectRaw('DATE(created_at) as day, SUM(total_cost) as revenue')
+        ->where('status', 'confirmed')
+        ->groupBy('day')
+        ->orderBy('day', 'desc')
+        ->get();
+
+    return view('reports.daily-revenue', compact('records'));
+})->name('print.daily.revenue'); // Important for route() helper
+
