@@ -11,37 +11,48 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Models\Reservation;
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/', [HomeController::class, 'home'])->name('home');
 
+Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/register', [HomeController::class, 'register'])->name('register');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
-// Route::get('/vehicles', [HomeController::class, 'showVehicles'])->name('showVehicles');
-Route::get('/vehicles', [VehicleController::class, 'vehicles'])->name('showVehicles');
 
+// Authentication Routes
+Route::middleware(['guest'])->group(function () {
+
+
+    // Google Authentication
+    Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
+    Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
+});
+
+
+
+// Public Routes
+Route::get('/vehicles', [VehicleController::class, 'vehicles'])->name('showVehicles');
 Route::get('/support', [HomeController::class, 'showSupport'])->name('showSupport');
 Route::get('/contact', [HomeController::class, 'showContact'])->name('showContact');
 Route::get('/about', [HomeController::class, 'showAbout'])->name('showAbout');
-
 Route::get('/vehicles/{vehicle_id}', [VehicleController::class, 'vehicleDetails'])->name('vehicle.details');
 
-// Test Route (for debugging) @botheju
-Route::get('/test', function () {
-    return view('test');
+// Email Verification Routes
+Route::middleware(['auth'])->group(function () {
+    Route::get('/email/verify', function () {
+        return view('auth.verify-email');
+    })->name('verification.notice');
 });
 
-// Google Authentication Routes using SocialController @bimsara
-Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
-Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
+// Verified User Routes
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
 
+    // ... other protected routes that require verified email
+});
 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
-    // ... other routes
+// Sanctum/Jetstream Routes (if needed)
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
+    // Your Jetstream routes here
 });
 
 Route::get('/print-daily-revenue', function () {
