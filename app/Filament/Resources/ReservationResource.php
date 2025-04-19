@@ -71,7 +71,7 @@ class ReservationResource extends Resource
         $set('end_date', null);
     }),
 
-DatePicker::make('end_date')
+    DatePicker::make('end_date')
     ->label('End Date')
     ->required()
     ->minDate(function (Get $get) {
@@ -86,16 +86,26 @@ DatePicker::make('end_date')
             };
         }
     ])
-    ->helperText('Must be after start date'),
+    ->helperText('Must be after start date')
+    ->live()
+    ->afterStateUpdated(function (Set $set, Get $get) {
+        $startDate = $get('start_date');
+        $endDate = $get('end_date');
+        $dailyRate = $get('daily_rate');
+    
+        if ($startDate && $endDate && $dailyRate) {
+            $days = (new \DateTime($endDate))->diff(new \DateTime($startDate))->days;
+            $set('total_cost', $days * $dailyRate);
+        } else {
+            $set('total_cost', 0);
+        }
+    }),
 
-    TextInput::make('total_cost')
+Forms\Components\TextInput::make('total_cost')
     ->label('Total Cost')
-    ->numeric()
-    ->hidden() 
-    ->default(1500) // Set default value
+    ->reactive()
+  ,
 
-
-    ,
         // Status (dropdown)
         Select::make('status')
             ->label('Status')
