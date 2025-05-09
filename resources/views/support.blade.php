@@ -24,7 +24,7 @@
         width: 100%;
         padding: 1.25rem;
         text-align: left;
-        background: white;
+        
         border: none;
         display: flex;
         justify-content: space-between;
