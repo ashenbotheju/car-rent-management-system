@@ -1,10 +1,8 @@
 <x-guest-layout>
     <div class="flex min-h-screen items-center justify-center dark:bg-gray-900">
         <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
-
             <!-- Logo -->
             <div class="flex justify-center">
-                {{-- <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-40 h-40"> --}}
                 <x-logo />
             </div>
 
@@ -15,6 +13,14 @@
             <p class="text-center text-sm text-gray-500 dark:text-gray-400">
                 Please enter your details to sign in.
             </p>
+
+            <!-- Success Message (after registration, password reset, etc.) -->
+            @if (session('status'))
+                <div
+                    class="mb-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg text-sm">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             <!-- Google Login Button -->
             <div class="mt-6">
@@ -35,12 +41,18 @@
                 </div>
             </div>
 
-            <!-- Validation Errors -->
-            <x-validation-errors class="mb-4" />
-
             <!-- Login Form -->
             <form method="POST" action="{{ route('login') }}" class="mt-6">
                 @csrf
+
+                <!-- Error Messages -->
+                @if ($errors->any())
+                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg text-sm">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
+                @endif
 
                 <!-- Email -->
                 <div>
@@ -73,7 +85,7 @@
 
                 <!-- Login Button -->
                 <div class="mt-6">
-                    <x-button class="w-full flex justify-center ">
+                    <x-button class="w-full flex justify-center">
                         Sign in
                     </x-button>
                 </div>
@@ -86,7 +98,6 @@
                     Create account
                 </a>
             </p>
-
         </div>
     </div>
 </x-guest-layout>
