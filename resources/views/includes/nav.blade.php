@@ -74,12 +74,16 @@
                             Us</a>
                     </div>
                     <div class="py-6">
+                        @auth
+                         <x-profile-dropdown />
+                        @else
                         <a href="{{ route('login') }}"
                             class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50">Log
                             in</a>
                         <a href="{{ route('register') }}"
                             class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold text-gray-900 hover:bg-gray-50">Sign
                             in</a>
+                        @endauth
                     </div>
                 </div>
             </div>

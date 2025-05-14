@@ -21,7 +21,7 @@
                 <div class="w-full max-w-sm px-4 py-3 bg-white rounded-md shadow-md dark:bg-gray-800">
                     <div class="flex items-center justify-between">
                         <div class="">
-                            <h1 class="text-lg font-bold text-gray-800 dark:text-gray-400">{{ $vehicle->barnd }} {{ $vehicle->model }}</h1>
+                            <h1 class="text-lg font-bold text-gray-800 dark:text-gray-400">{{ $vehicle->brand }} {{ $vehicle->model }}</h1>
                             <p class="text-sm font-light text-gray-800 dark:text-gray-400">{{ $vehicle->type }}</p>
                         </div>
                         <div>

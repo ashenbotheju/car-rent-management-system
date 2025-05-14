@@ -11,6 +11,11 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Models\Reservation;
+use App\Http\Controllers\StripePaymentController;
+
+
+Route::get('/', [HomeController::class, 'home'])->name('home');
+
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
@@ -50,6 +55,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
     // Your Jetstream routes here
 });
+Route::get('/stripe-payment', [StripePaymentController::class, 'showForm'])->name('stripe.form');
+Route::post('/stripe-payment', [StripePaymentController::class, 'processPayment'])->name('stripe.payment');
+Route::get('/payment', function () {
+    return view('payment');
+})->name('payment');
 
 Route::get('/print-daily-revenue', function () {
     $records = Reservation::query()
