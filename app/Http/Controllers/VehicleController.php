@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Vehicles;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
@@ -11,13 +11,15 @@ class VehicleController extends Controller
     //     return view('display_vehicle');
     // }
 
-    function vehicles(){
-        $vehicles = Vehicles::paginate(3);
+    function vehicles()
+    {
+        $vehicles = Vehicle::paginate(3);
         return view('vehicles', compact('vehicles'));
     }
 
-    function vehicleDetails($vehicle_id){
-        $vehicle = Vehicles::where('vehicle_id', $vehicle_id)->first();
+    function vehicleDetails($vehicle_id)
+    {
+        $vehicle = Vehicle::where('vehicle_id', $vehicle_id)->first();
         return view('display_vehicle', compact('vehicle'));
     }
 }

@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Car Rental - Home')
+@section('title', 'Car Rental - vehicle_overview')
 @section('content')
 <style>
     .vehicle-gallery {
@@ -254,7 +254,7 @@
             <!-- vehicle Info -->
             <div class="vehicle-info">
                 <p class="font-medium text-indigo-600 mb-3">{{$vehicle->type}}</p>
-                <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{$vehicle->barnd}} {{$vehicle->model}}</h1>
+                <h1 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">{{$vehicle->brand}} {{$vehicle->model}}</h1>
                 
                 <div class="flex items-center mb-6">
                     <span class="text-2xl font-semibold text-gray-900 mr-4">Rs.{{$vehicle->daily_rate}} / Day</span>
@@ -307,6 +307,8 @@
                                     <option value="16:00">04:00 PM</option>
                                     <option value="17:00">05:00 PM</option>
                                     <option value="18:00">06:00 PM</option>
+                                    <option value="18:00">07:00 PM</option>
+                                    <option value="18:00">08:00 PM</option>
                                 </select>
                             </div>
                         </div>
@@ -366,9 +368,7 @@
             </div>
 
                 
-               
-            </div>
-            
+
         </div>
     </div>
 </section>
@@ -394,7 +394,6 @@
         
         // Add active class to clicked thumbnail
         element.classList.add('active');
-    }
-    
+    }  
 </script>  
 @endsection

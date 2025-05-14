@@ -4,7 +4,6 @@
 
             {{-- Logo --}}
             <div class="flex justify-center mb-6">
-                {{-- <img src="{{ asset('images/VLogo.png') }}" alt="Logo" class="w-14 h-14"> --}}
                 <x-logo />
             </div>
 
@@ -24,32 +23,30 @@
             @endif
 
             {{-- Resend Verification Form --}}
-            <div class="mt-4 flex items-center justify-between">
-                <form method="POST" action="{{ route('verification.send') }}">
-                    @csrf
-                    <div class="w-full">
-                        <x-button type="submit"
-                            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg">
-                            {{ __('Resend Verification Email') }}
-                        </x-button>
+            <form method="POST" action="{{ route('verification.send') }}" class="mt-4">
+                @csrf
+                <x-button type="submit"
+                    class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg">
+                    <div class="text-center w-full">
+                        {{ __('Resend Verification Email') }}
                     </div>
+                </x-button>
+            </form>
+
+            {{-- Edit Profile and Logout --}}
+            <div class="mt-4 flex justify-between">
+                <a href="{{ route('profile.show') }}"
+                    class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
+                    {{ __('Edit Profile') }}
+                </a>
+
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit"
+                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800 ">
+                        {{ __('Log Out') }}
+                    </button>
                 </form>
-
-                {{-- Edit Profile and Logout --}}
-                <div class="mt-4 flex justify-between w-full">
-                    <a href="{{ route('profile.show') }}"
-                        class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                        {{ __('Edit Profile') }}
-                    </a>
-
-                    <form method="POST" action="{{ route('logout') }}" class="inline">
-                        @csrf
-                        <button type="submit"
-                            class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                            {{ __('Log Out') }}
-                        </button>
-                    </form>
-                </div>
             </div>
 
         </div>

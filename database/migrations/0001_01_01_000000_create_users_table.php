@@ -1,8 +1,9 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
 
 return new class extends Migration
 {
@@ -19,10 +20,11 @@ return new class extends Migration
             $table->string('password');
             $table->string('phone_number', 15)->nullable();
             $table->string('address', 255)->nullable();
-            $table->enum('role', ['user', 'admin'])->default('user');
+            $table->string('role')->default(User::ROLE_DEFAULT);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
 
