@@ -16,7 +16,7 @@ class RegisterResponse implements RegisterResponseContract
     {
         return redirect()->route('login')->with([
             'status' => 'Registration successful! Please log in to continue.',
-            'registered_email' => $request->email // Optional: pass the email to login page
+            'registered_email' => $request->email 
         ]);
     }
 }
