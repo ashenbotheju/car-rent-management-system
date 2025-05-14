@@ -20,14 +20,10 @@ Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
 // Authentication Routes
 Route::middleware(['guest'])->group(function () {
-
-
     // Google Authentication
     Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 });
-
-
 
 // Public Routes
 Route::get('/vehicles', [VehicleController::class, 'vehicles'])->name('showVehicles');

@@ -5,34 +5,43 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class HomeController extends Controller
 {
-    function home(){
+    function home()
+    {
         return view('welcome');
     }
-    
-    function login(){
+
+    function login()
+    {
         return view('auth.login');
     }
 
-    function register(){
+    function register()
+    {
         return view('auth.register');
     }
 
-    function showVehicles(){
+    function showVehicles()
+    {
         return view('vehicles');
     }
 
-    function showSupport(){
+    function showSupport()
+    {
         return view('support');
     }
-    function showContact(){
+    function showContact()
+    {
         return view('contact');
     }
-    function showAbout(){
+    function showAbout()
+    {
         return view('about');
     }
-    function logout(){
+    function logout()
+    {
         Auth::logout();
         return view('welcome');
     }
