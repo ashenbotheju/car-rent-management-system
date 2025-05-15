@@ -2,7 +2,7 @@
 @section('title', 'Car Rental - contact')
 @section('content')
 <section class="dark:bg-gray-900 pt-16">
-    <div class="lg:py-16 px-4 mx-auto max-w-screen-md">
+    <div class="lg:py-16 px-4 mx-auto max-w-screen-md mt-20">
         <div class="text-center mb-12">
             <h2 class="mb-4 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">Contact Us</h2>
             <p class="max-w-2xl mx-auto font-light text-gray-500 dark:text-gray-400 text-base md:text-lg">
@@ -50,8 +50,11 @@
                     </div>
                     <!-- Honeypot Spam Protection -->
                     <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    <input type="hidden" name="from_name" value="Client Notification">
+                    <input type="hidden" name="subject" value="New Submission from client">
 
                     <!-- Custom Confirmation / Success Page -->
+                    <input type="hidden" name="redirect" value="{{ route('showContact') }}">
                     <!-- <input type="hidden" name="redirect" value="https://mywebsite.com/thanks.html"> -->
 
                     <button type="submit" class="w-full md:w-auto px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
