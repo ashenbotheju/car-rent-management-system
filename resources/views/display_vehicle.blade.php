@@ -290,7 +290,7 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="pickup-date">Pick-Up Date</label>
-                            <input type="date" id="pickup-date" class="form-control flatpickr-input" placeholder="Select date" name="pickupdate">
+                            <input type="date" id="pickup-date" class="form-control flatpickr-input" placeholder="Select date" name="pickupdate" min="{{ date('Y-m-d') }}">
                         </div>
                         <div class="form-group">
                             <label for="pickup-time">Pick-Up Time</label>
@@ -319,9 +319,9 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="dropoff-date">Drop-Off Date</label>
-                            <input type="date" id="dropoff-date" class="form-control flatpickr-input" placeholder="Select date" name="dropoffdate">
+                            <input type="date" id="dropoff-date" class="form-control flatpickr-input" placeholder="Select date" name="dropoffdate" min="{{ date('Y-m-d') }}">
                             <input type="hidden" name="vehicle_id" value="{{$vehicle->vehicle_id}}">
-                            <input type="hidden" name="daily_rate" value="{{$vehicle->daily_rate}}">
+                            <input type="text" name="daily_rate" value="{{$vehicle->daily_rate}}">
                         </div>
                         <div class="form-group">
                             <label for="dropoff-time">Drop-Off Time</label>
@@ -354,9 +354,7 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                     </button> --}}
-                        <button class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg font-medium transition">
-                        Make Payment
-                    </button>
+                        <input type="submit" value="Make Payment"class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg font-medium transition">
                 </div>
                 @if ($errors->any())
                 <div class="alert alert-danger">
@@ -372,6 +370,12 @@
         </div>
     </div>
 </section>
+
+@if(session('success'))
+<script>
+    alert("{{ session('success') }}");
+</script>
+@endif
 
 <script>
      // Initialize date pickers
@@ -395,5 +399,6 @@
         // Add active class to clicked thumbnail
         element.classList.add('active');
     }  
+ 
 </script>  
 @endsection

@@ -52,7 +52,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 // Stripe Payment Routes
 Route::get('/stripe-payment', [StripePaymentController::class, 'showForm'])->name('stripe.form');
-Route::post('/stripe-payment', [StripePaymentController::class, 'processPayment'])->name('stripe.payment');
+Route::post('/stripe-payment/{id}', [StripePaymentController::class, 'processPayment'])->name('stripe.payment');
 
 Route::get('/payment', function () {
     return view('payment');
