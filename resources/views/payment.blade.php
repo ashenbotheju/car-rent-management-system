@@ -15,11 +15,14 @@
         <p style="color:red;">{{ session('error') }}</p>
     @endif
 
-    <form action="{{ route('stripe.payment') }}" method="POST" id="payment-form">
+    <form action="/stripe-payment/{{$total_cost}}" method="POST" id="payment-form">
         @csrf
+        <lable for="email">#ID{{ $reservation_id }}</lable>
         <input type="email" name="email" placeholder="Email" required><br><br>
         <div id="card-element"></div>
-        <button type="submit" id="submit">Pay $10</button>
+        <button type="submit" id="submit">
+            <span id="button-text">Pay Rs.{{$total_cost}}</span>
+        </button>
     </form>
 
     <script>
