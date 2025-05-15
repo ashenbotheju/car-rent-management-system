@@ -14,11 +14,8 @@ class BookingController extends Controller
       
         // Validate the form data
         $validatedData = $request->validate([
-            
-'pickupdate' => 'required',
-         
+            'pickupdate' => 'required',
             'dropoffdate' => 'required',
-          
             'daily_rate' => 'required',
             'vehicle_id' => 'required'
         ]);

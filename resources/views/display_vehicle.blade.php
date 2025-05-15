@@ -344,31 +344,31 @@
                             </div>
                         </div>
                 </div>
-                     <!-- Rent Now Button -->
-                    <div class="flex gap-3">
-                        {{-- <button class="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-                            </svg>
-                        </button> --}}
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-900 mr-4 mb-10 mt-5">Total Price: LKR {{$vehicle->daily_rate}}</h2>
+                </div>
+                <!-- Rent Now Button -->
+                <div class="flex gap-3">
+                    {{-- <button class="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+                        </svg>
+                    </button> --}}
                         <button class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg font-medium transition">
-                            Make Payment
-                        </button>
-                    </div>
-                   @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-@endif
+                        Make Payment
+                    </button>
+                </div>
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                @endforeach
+                    </ul>
+                </div>
+                @endif
                 </form>
             </div>
-
-                
-
         </div>
     </div>
 </section>
