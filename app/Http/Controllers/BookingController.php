@@ -1,12 +1,13 @@
 <?php
-
 namespace App\Http\Controllers;
 use App\Models\Vehicles;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+
 class BookingController extends Controller
+
 {
 public function CreateBooking(Request $request)
 {
