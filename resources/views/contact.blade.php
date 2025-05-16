@@ -2,7 +2,7 @@
 @section('title', 'Car Rental - contact')
 @section('content')
 <section class="dark:bg-gray-900 pt-16">
-    <div class="lg:py-16 px-4 mx-auto max-w-screen-md">
+    <div class="lg:py-16 px-4 mx-auto max-w-screen-md mt-20">
         <div class="text-center mb-12">
             <h2 class="mb-4 text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white">Contact Us</h2>
             <p class="max-w-2xl mx-auto font-light text-gray-500 dark:text-gray-400 text-base md:text-lg">
@@ -13,7 +13,7 @@
         <div class="grid md:grid-cols-2 gap-12">
             <!-- Contact Form -->
             <div class="md:col-span-1">
-                <form action="#" class="space-y-6">
+                {{-- <form action="#" class="space-y-6">
                     <div>
                         <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Your email</label>
                         <input type="email" id="email" class="block p-3 w-full text-sm rounded-lg border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="name@example.com" required>
@@ -28,6 +28,37 @@
                     </div>
                     <button type="submit" class="w-full md:w-auto px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                         Send message
+                    </button>
+                </form> --}}
+                
+                <form action="https://api.web3forms.com/submit" method="POST">
+                    <!-- Replace with your Access Key -->
+                    <input type="hidden" name="access_key" value="6fb88fad-db06-4b08-9f3e-d45e53be2396">
+
+                    <!-- Form Inputs. Each input must have a name="" attribute -->
+                    <div>
+                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Name</label>
+                        <input type="text" name="name" class="block mb-2 p-3 w-full text-sm rounded-lg border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Ashen botheju" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Email</label>
+                        <input type="email" name="email" class="block mb-2 p-3 w-full text-sm rounded-lg border border-gray-300 shadow-sm focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="ashen@example.com" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Message</label>
+                        <textarea name="message" rows="5" class="block mb-5 p-2.5 w-full text-sm rounded-lg shadow-sm border border-gray-300 focus:ring-indigo-500 focus:border-indigo-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Your message....." required></textarea>
+                    </div>
+                    <!-- Honeypot Spam Protection -->
+                    <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
+                    <input type="hidden" name="from_name" value="Client Notification">
+                    <input type="hidden" name="subject" value="New Submission from client">
+
+                    <!-- Custom Confirmation / Success Page -->
+                    <input type="hidden" name="redirect" value="{{ route('showContact') }}">
+                    <!-- <input type="hidden" name="redirect" value="https://mywebsite.com/thanks.html"> -->
+
+                    <button type="submit" class="w-full md:w-auto px-5 py-3 text-sm font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:ring-4 focus:outline-none focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                        Submit Form
                     </button>
                 </form>
             </div>

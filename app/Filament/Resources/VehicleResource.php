@@ -49,9 +49,9 @@ class VehicleResource extends Resource
         
             Forms\Components\TextInput::make('color')
                 ->label('Color')
-                ->nullable()
                 ->required()
-                ->maxLength(50),
+                ->maxLength(20)
+                ->rules(['regex:/^[a-zA-Z\s]+$/']), // Only letters and spaces
         
             Forms\Components\Select::make('fuel_type')
             ->label('Fuel Type')
@@ -80,6 +80,7 @@ class VehicleResource extends Resource
                     '10' => '10',
                 ])
                 ->nullable()
+                ->required()
                 ->native(false) // Optional: forces use of custom select UI
         ,
         
@@ -90,7 +91,6 @@ class VehicleResource extends Resource
                 'manual' => 'Manual',
             ])
             ->default('Auto')
-            ->searchable()
             ->required(),
         
             Forms\Components\Repeater::make('images')
@@ -129,9 +129,10 @@ class VehicleResource extends Resource
                 ->label('Mileage (km)')
                 ->numeric()
                 ->minValue(0)
-                ->maxValue(1000000)
+                ->required()
+                ->maxValue(200000)
                 ->step(1)
-                ->nullable()
+                
                 ->rules([
                     'integer',
                     'min:0',
@@ -142,12 +143,12 @@ class VehicleResource extends Resource
                 ->helperText('Current vehicle mileage in kilometers'),
         
                 Forms\Components\TextInput::make('fuel_efficiency')
-    ->label('Fuel Efficiency (km/l)')
+    ->label('Efficiency')
     ->numeric()
+    ->required()
     ->minValue(0)
-    ->maxValue(50) // Adjust based on realistic values
+    ->maxValue(85) // Adjust based on realistic values
     ->step(0.1) // Allows decimal values
-    ->nullable()
     ->suffix('km/l') // Visual indicator
     ->rules([
         'numeric',
@@ -221,12 +222,7 @@ return $table
             ->copyMessage('Registration number copied')
             ->copyMessageDuration(1500),
 
-        TextColumn::make('mileage')
-            ->label('Mileage (km)')
-            ->numeric(decimalPlaces: 0)  // Ensures whole numbers
-            ->sortable()
-            ->suffix(' km')
-            ->alignRight(),
+     
             
             TextColumn::make('seats')
             ->label('Seats')
@@ -241,8 +237,8 @@ return $table
             TextColumn::make('engine')
     ->label('Engine')
     ->sortable()
-    ->searchable()
-    ->description(fn (Vehicle $record): string => $record->fuel_efficiency ?? ''),
+    ->searchable(),
+    //->description(fn (Vehicle $record): string => $record->fuel_efficiency ?? ''),
 
         TextColumn::make('daily_rate')
             ->label('Daily Rate')
