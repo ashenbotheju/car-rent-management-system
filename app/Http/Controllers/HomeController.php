@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Testimonial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +11,15 @@ class HomeController extends Controller
 {
     function home()
     {
-        return view('welcome');
+        if (Auth::check()) {
+            logger('User is authenticated: ' . Auth::user()->email);
+        } else {
+            logger('User is NOT authenticated');
+        }
+        //return view('welcome');
+
+        $testimonials = Testimonial::all();
+        return view('welcome', compact('testimonials'));
     }
 
     function login()

@@ -12,9 +12,8 @@ use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Models\Reservation;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\TestimonialController;
 
-
-Route::get('/', [HomeController::class, 'home'])->name('home');
 
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
@@ -45,16 +44,19 @@ Route::middleware(['auth'])->group(function () {
 });
 
 // Verified User Routes
-Route::middleware(['auth', 'verified'])->group(function () {
+// Route::middleware(['auth', 'verified'])->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+// });
+
+// this route adding for debugging purpose remove it after success
+Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
-
-    // ... other protected routes that require verified email
 });
 
-// Sanctum/Jetstream Routes (if needed)
-Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
-    // Your Jetstream routes here
+Route::middleware(['auth'])->group(function () {
+    // Your authenticated routes
 });
+
 Route::get('/stripe-payment', [StripePaymentController::class, 'showForm'])->name('stripe.form');
 Route::post('/stripe-payment', [StripePaymentController::class, 'processPayment'])->name('stripe.payment');
 Route::get('/payment', function () {
@@ -72,3 +74,8 @@ Route::get('/print-daily-revenue', function () {
     return view('reports.daily-revenue', compact('records'));
 })->name('print.daily.revenue'); // Important for route() helper
 
+
+
+//Route::get('/testimonials', [TestimonialController::class, 'index']);
+//Route::get('/', [TestimonialController::class, 'index']);
+Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
