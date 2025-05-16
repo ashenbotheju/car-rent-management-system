@@ -13,6 +13,7 @@ use App\Http\Controllers\SocialController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\TestimonialController;
 use Laravel\Socialite\Facades\Socialite;
 
 // Home Routes
@@ -47,7 +48,6 @@ Route::middleware(['auth'])->group(function () {
 // Verified User Routes
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
-    // Add more verified-user routes here
 });
 
 // Stripe Payment Routes
@@ -69,6 +69,9 @@ Route::get('/print-daily-revenue', function () {
 
     return view('reports.daily-revenue', compact('records'));
 })->name('print.daily.revenue');
+
+// Testimonials
+Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
 
 // Debug/Test Route (optional - remove in production)
 Route::get('/test', function () {
