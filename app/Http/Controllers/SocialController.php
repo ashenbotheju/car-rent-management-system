@@ -35,7 +35,7 @@ class SocialController extends Controller
 
             // Debugging check (temporary)
             if (Auth::check()) {
-                return redirect()->intended('/profile'); // Go directly to authenticated page
+                return redirect()->intended('/'); // Go directly to authenticated page
             }
 
             return redirect('/'); // Fallback if auth fails
