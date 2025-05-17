@@ -3,7 +3,7 @@
 @section('content')
     <div class="container py-25 mt-40 mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <!-- Page Heading Section -->
-        <div class="text-center mb-12">
+        <div class="text-center mb-20">
             {{-- <h6 class="text-indigo-600 text-base font-medium uppercase tracking-wider mb-2">Our Fleet</h6> --}}
             <h2 class="text-3xl font-bold text-gray-900 sm:text-4xl font-manrope">
                 Explore Our Premium Vehicle Collection
@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     {{-- <img class="object-cover w-full h-48 mt-2" src="{{ asset('../images/car/toyota aqua.jpg')}}" alt="toyota aqua"> --}}
-                    <img class="object-cover w-full h-48 mt-2" src="{{ $vehicle->image_1}}" alt="toyota aqua">
+                    <img class="object-cover w-full h-50 w-auto mt-2" src="{{ $vehicle->image_1}}" alt="toyota aqua">
                     <div class="flex items-center justify-between mt-3 mb-8">
                         <div class="flex items-center">
                             <img class="w-4 h-4 mr-2" src="{{ asset('../images/car/folder.svg')}}" alt="">

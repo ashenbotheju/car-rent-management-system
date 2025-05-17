@@ -283,13 +283,14 @@
                 </div>
 
                 <!-- Rental Form Section -->
+                <form action="{{ route('booking.create') }}" method="get">
                 <div class="rental-form">
                     <h3>Rental Information</h3>
                     
                     <div class="form-row">
                         <div class="form-group">
                             <label for="pickup-date">Pick-Up Date</label>
-                            <input type="text" id="pickup-date" class="form-control flatpickr-input" placeholder="Select date">
+                            <input type="date" id="pickup-date" class="form-control flatpickr-input" placeholder="Select date" name="pickupdate" min="{{ date('Y-m-d') }}">
                         </div>
                         <div class="form-group">
                             <label for="pickup-time">Pick-Up Time</label>
@@ -318,7 +319,9 @@
                     <div class="form-row">
                         <div class="form-group">
                             <label for="dropoff-date">Drop-Off Date</label>
-                            <input type="text" id="dropoff-date" class="form-control flatpickr-input" placeholder="Select date">
+                            <input type="date" id="dropoff-date" class="form-control flatpickr-input" placeholder="Select date" name="dropoffdate" min="{{ date('Y-m-d') }}">
+                            <input type="hidden" name="vehicle_id" value="{{$vehicle->vehicle_id}}">
+                            <input type="text" name="daily_rate" value="{{$vehicle->daily_rate}}">
                         </div>
                         <div class="form-group">
                             <label for="dropoff-time">Drop-Off Time</label>
@@ -340,10 +343,10 @@
                                 </select>
                             </div>
                         </div>
-                    </div>
                 </div>
-
-                
+                <div>
+                    <h2 class="text-2xl font-semibold text-gray-900 mr-4 mb-10 mt-5">Total Price: LKR {{$vehicle->daily_rate}}</h2>
+                </div>
                 <!-- Rent Now Button -->
                 <div class="flex gap-3">
                     {{-- <button class="p-3 rounded-full bg-gray-100 hover:bg-gray-200 transition">
@@ -351,14 +354,28 @@
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                         </svg>
                     </button> --}}
-                    <button class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg font-medium transition">
-                        Make Payment
-                    </button>
+                        <input type="submit" value="Make Payment"class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-lg font-medium transition">
                 </div>
-            </div>  
+                @if ($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                @endforeach
+                    </ul>
+                </div>
+                @endif
+                </form>
+            </div>
         </div>
     </div>
 </section>
+
+@if(session('success'))
+<script>
+    alert("{{ session('success') }}");
+</script>
+@endif
 
 <script>
      // Initialize date pickers
@@ -382,5 +399,6 @@
         // Add active class to clicked thumbnail
         element.classList.add('active');
     }  
+ 
 </script>  
 @endsection

@@ -13,13 +13,22 @@ class StripePaymentController extends Controller
         return view('stripe.form');
     }
 
-    public function processPayment(Request $request)
+    public function processPayment(Request $request, $id)
+    {
+        // Validate the request
+        $request->validate([
+            'stripeToken' => 'required',
+            'email' => 'required|email',
+        ]);
+
+        // Set your secret key. Remember to switch to your live secret key in production!
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
     {
         Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
             $charge = Charge::create([
-                'amount' => 1000, // $10, in cents
+                'amount' => (int) $id,
                 'currency' => 'usd',
                 'source' => $request->stripeToken,
                 'description' => 'Test Payment from Laravel',
@@ -30,5 +39,6 @@ class StripePaymentController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', $e->getMessage());
         }
+    }
     }
 }
