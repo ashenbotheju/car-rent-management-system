@@ -231,22 +231,22 @@
         <div class="vehicle-container">
             <!-- Vehicle Gallery -->
             <div class="vehicle-gallery">
-                <img id="main-image" src="{{$vehicle->image_1}}" alt="Yellow Travel Bag" class="main-image">
+                <img id="main-image" src="{{$vehicle->image_1}}" alt="vehicle" class="main-image w-full max-h-[400px] object-contain rounded-lg shadow-md">
                 
                 <div class="thumbnail-container">
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
+                    <img src="{{$vehicle->image_1}}" alt="vehicle" 
                          class="thumbnail active" 
                          onclick="changeImage('{{$vehicle->image_1}}', this)">
                     
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
+                    <img src="{{$vehicle->image_1}}" alt="vehicle" 
                          class="thumbnail" 
                          onclick="changeImage('{{$vehicle->image_1}}', this)">
                     
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
+                    <img src="{{$vehicle->image_1}}" alt="vehicle" 
                          class="thumbnail" 
                          onclick="changeImage('{{$vehicle->image_1}}', this)">
                     
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
+                    <img src="{{$vehicle->image_1}}" alt="vehicle" 
                          class="thumbnail" 
                          onclick="changeImage('{{$vehicle->image_1}}', this)">
                 </div>

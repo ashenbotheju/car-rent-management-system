@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     {{-- <img class="object-cover w-full h-48 mt-2" src="{{ asset('../images/car/toyota aqua.jpg')}}" alt="toyota aqua"> --}}
-                    <img class="object-cover w-full h-50 w-auto mt-2" src="{{ $vehicle->image_1}}" alt="toyota aqua">
+                    <img class="object-cover w-full h-48 rounded-md mt-2" src="{{ $vehicle->image_1}}" alt="toyota aqua">
                     <div class="flex items-center justify-between mt-3 mb-8">
                         <div class="flex items-center">
                             <img class="w-4 h-4 mr-2" src="{{ asset('../images/car/folder.svg')}}" alt="">
@@ -56,7 +56,7 @@
                                 <span class="">day</span>
                             </div>
                             <div>
-                                <a class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href="{{ route('vehicle.details', $vehicle->vehicle_id)}}">Book Now</a>
+                                <a class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href="{{ route('vehicle.details', $vehicle->vehicle_id)}}">More Info ..</a>
                             </div>
                         </div>
                     </div>

@@ -2,9 +2,10 @@
 
 <section class="py-24">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="mb-16">
+        <div class="mb-16 text-center">
 
-            <h2 class="text-4xl text-center font-bold text-gray-900">What our happy user says!</h2>
+            <h2 class="text-4xl  mb-5 font-bold text-gray-900">What our happy user says!</h2>
+            <h2 class="mt-4 mb-10 text-lg font-medium text-pretty text-gray-500 sm:text-xl/8">Trusted feedback from our loyal customers</h2>
         </div>
         <!-- Slider wrapper -->
         <div class="swiper mySwiper">

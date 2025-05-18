@@ -24,6 +24,7 @@ Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 // Vehicle Routes
 Route::get('/vehicles', [VehicleController::class, 'vehicles'])->name('showVehicles');
 Route::get('/vehicles/{vehicle_id}', [VehicleController::class, 'vehicleDetails'])->name('vehicle.details');
+Route::get('/', [VehicleController::class, 'homeVehicles'])->name('home');
 
 // Information Pages
 Route::get('/support', [HomeController::class, 'showSupport'])->name('showSupport');
