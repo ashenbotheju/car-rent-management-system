@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers;
-use App\Models\Vehicles;
+use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Carbon\Carbon;
@@ -39,6 +39,9 @@ public function CreateBooking(Request $request)
     $totalCost = $validatedData['daily_rate'] * $days;
 
     // Create reservation
+    if (!auth()->check()) {
+        return redirect()->back()->with('error2', 'You must be logged in to make a reservation.');
+    }
     $reservationData = [
         'user_id'     => auth()->user()->id,
         'vehicle_id'  => $validatedData['vehicle_id'],
@@ -50,10 +53,13 @@ public function CreateBooking(Request $request)
 
     $result = Reservation::create($reservationData);
 
-    return view('payment', [
-        'reservation_id' => $result->reservation_id,
-        'total_cost' => $result->total_cost
-    ]);
+    // return view('payment', [
+    //     'reservation_id' => $result->reservation_id,
+    //     'total_cost' => $result->total_cost
+    // ]);
+ return redirect()->route('stripe.checkout', [
+    'price' => $reservationData['total_cost'], 
+    'product' => $reservationData['vehicle_id']// or whatever field contains the vehicle name
+]);
 }
-
 }

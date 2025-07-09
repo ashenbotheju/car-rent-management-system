@@ -13,7 +13,7 @@ class VehicleController extends Controller
 
     function vehicles()
     {
-        $vehicles = Vehicle::paginate(3);
+        $vehicles = Vehicle::with('images')->paginate(3);
         return view('vehicles', compact('vehicles'));
     }
 

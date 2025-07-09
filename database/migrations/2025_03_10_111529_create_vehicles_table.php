@@ -17,7 +17,6 @@ return new class extends Migration
             $table->string('fuel_efficiency', 50)->nullable();
             $table->integer('year');
             $table->string('color', 50)->nullable();
-            $table->text('image_1')->nullable();
             $table->integer('seats')->nullable();
             $table->string('engine', 50);
             $table->string('registration_number', 20)->unique();

@@ -24,26 +24,11 @@
                             <h1 class="text-lg font-bold text-gray-800 dark:text-gray-400">{{ $vehicle->brand }} {{ $vehicle->model }}</h1>
                             <p class="text-sm font-light text-gray-800 dark:text-gray-400">{{ $vehicle->type }}</p>
                         </div>
-                        <div>
-                            {{-- <a href=""><img src="{{ asset('../images/car/wishlist-star.svg')}}" alt="" class="w-7 h-7"></a> --}}
-                        </div>
+                      
                     </div>
-                    {{-- <img class="object-cover w-full h-48 mt-2" src="{{ asset('../images/car/toyota aqua.jpg')}}" alt="toyota aqua"> --}}
-                    <img class="object-cover w-full h-50 w-auto mt-2" src="{{ $vehicle->image_1}}" alt="toyota aqua">
-                    <div class="flex items-center justify-between mt-3 mb-8">
-                        <div class="flex items-center">
-                            <img class="w-4 h-4 mr-2" src="{{ asset('../images/car/folder.svg')}}" alt="">
-                            <span class="text-gray-700 font-bold dark:text-gray-200">{{ $vehicle->year }}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <img class="w-4 h-4 mr-2" src="{{ asset('../images/car/tire-rugged.svg')}}" alt="">
-                            <span class="text-gray-700 font-bold dark:text-gray-200">{{ $vehicle->engine }}</span>
-                        </div>
-                        <div class="flex items-center">
-                            <img class="w-4 h-4 mr-2" src="{{ asset('../images/car/users.svg')}}">
-                            <span class="text-gray-700 font-bold dark:text-gray-200">{{ $vehicle->seats }}</span>
-                        </div>
-                    </div>
+                    @if($vehicle->images->isNotEmpty())
+                        <img class="object-cover w-full h-50 w-auto mt-2" src="{{ asset('storage/' . $vehicle->images->first()->url) }}" alt="vehicle image">
+                    @endif
                     <div>
                         <p class="text-lg"><strong>Available</strong></p>
                     </div>

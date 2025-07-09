@@ -226,30 +226,22 @@
 </style>
 
 <section class="py-10 lg:py-16 mt-20">
-    {{-- {{$vehicle}} --}}
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div class="vehicle-container">
             <!-- Vehicle Gallery -->
             <div class="vehicle-gallery">
-                <img id="main-image" src="{{$vehicle->image_1}}" alt="Yellow Travel Bag" class="main-image">
-                
+                <img id="main-image" src="{{$vehicle->image_1}}" alt="" class="main-image">
+               
                 <div class="thumbnail-container">
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
+                    @foreach($vehicle->images as $image)
+                    <img src="{{ asset('storage/' . $image->url) }}" alt="" 
                          class="thumbnail active" 
                          onclick="changeImage('{{$vehicle->image_1}}', this)">
                     
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
-                         class="thumbnail" 
-                         onclick="changeImage('{{$vehicle->image_1}}', this)">
-                    
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
-                         class="thumbnail" 
-                         onclick="changeImage('{{$vehicle->image_1}}', this)">
-                    
-                    <img src="{{$vehicle->image_1}}" alt="Travel Bag thumbnail" 
-                         class="thumbnail" 
-                         onclick="changeImage('{{$vehicle->image_1}}', this)">
+                   
+                    @endforeach
                 </div>
+
             </div>
             <!-- vehicle Info -->
             <div class="vehicle-info">
@@ -321,7 +313,7 @@
                             <label for="dropoff-date">Drop-Off Date</label>
                             <input type="date" id="dropoff-date" class="form-control flatpickr-input" placeholder="Select date" name="dropoffdate" min="{{ date('Y-m-d') }}">
                             <input type="hidden" name="vehicle_id" value="{{$vehicle->vehicle_id}}">
-                            <input type="text" name="daily_rate" value="{{$vehicle->daily_rate}}">
+                            <input type="hidden" name="daily_rate" value="{{$vehicle->daily_rate}}">
                         </div>
                         <div class="form-group">
                             <label for="dropoff-time">Drop-Off Time</label>
@@ -376,7 +368,36 @@
     alert("{{ session('success') }}");
 </script>
 @endif
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const pickupDate = document.getElementById('pickup-date');
+    const dropoffDate = document.getElementById('dropoff-date');
+    const totalPriceElem = document.querySelector('h2.text-2xl');
+    const dailyRate = parseFloat("{{$vehicle->daily_rate}}");
 
+    function calculateTotal() {
+        const start = pickupDate.value;
+        const end = dropoffDate.value;
+        if (start && end) {
+            const startDate = new Date(start);
+            const endDate = new Date(end);
+            let days = (endDate - startDate) / (1000 * 60 * 60 * 24);
+            days = Math.ceil(days);
+            if (days > 0) {
+                const total = days * dailyRate;
+                totalPriceElem.textContent = `Total Price: LKR ${total}`;
+            } else {
+                totalPriceElem.textContent = `Total Price: LKR ${dailyRate}`;
+            }
+        } else {
+            totalPriceElem.textContent = `Total Price: LKR ${dailyRate}`;
+        }
+    }
+
+    pickupDate.addEventListener('change', calculateTotal);
+    dropoffDate.addEventListener('change', calculateTotal);
+});
+</script>
 <script>
      // Initialize date pickers
      flatpickr("#pickup-date", {
