@@ -24,7 +24,7 @@
                             <h1 class="text-lg font-bold text-gray-800 dark:text-gray-400">{{ $vehicle->brand }} {{ $vehicle->model }}</h1>
                             <p class="text-sm font-light text-gray-800 dark:text-gray-400">{{ $vehicle->type }}</p>
                         </div>
-                      
+
                     </div>
                     @if($vehicle->images->isNotEmpty())
                         <img class="object-cover w-full h-50 w-auto mt-2" src="{{ asset('storage/' . $vehicle->images->first()->url) }}" alt="vehicle image">
@@ -41,7 +41,7 @@
                                 <span class="">day</span>
                             </div>
                             <div>
-                                <a class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href="{{ route('vehicle.details', $vehicle->vehicle_id)}}">Book Now</a>
+                                <a class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" href="{{ route('vehicle.details', $vehicle->vehicle_id)}}">More Info ..</a>
                             </div>
                         </div>
                     </div>

@@ -230,6 +230,7 @@
         <div class="vehicle-container">
             <!-- Vehicle Gallery -->
             <div class="vehicle-gallery">
+
                 <img id="main-image" src="{{$vehicle->image_1}}" alt="" class="main-image">
                
                 <div class="thumbnail-container">
@@ -240,6 +241,7 @@
                     
                    
                     @endforeach
+
                 </div>
 
             </div>
