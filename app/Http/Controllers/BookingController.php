@@ -1,17 +1,19 @@
 <?php
+
 namespace App\Http\Controllers;
-use App\Models\Vehicle;
+
 use Illuminate\Http\Request;
-use App\Models\Reservation;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class BookingController extends Controller
+use App\Models\Vehicle;
+use App\Models\Reservation;
+use Carbon\Carbon;
 
+class BookingController extends Controller
 {
-public function CreateBooking(Request $request)
-{
-    $validatedData = $request->validate([
+    public function CreateBooking(Request $request)
+    {
+        $validatedData = $request->validate([
         'pickupdate' => 'required|date',
         'dropoffdate' => 'required|date|after_or_equal:pickupdate',
         'daily_rate' => 'required|numeric',
@@ -57,9 +59,9 @@ public function CreateBooking(Request $request)
     //     'reservation_id' => $result->reservation_id,
     //     'total_cost' => $result->total_cost
     // ]);
- return redirect()->route('stripe.checkout', [
+    return redirect()->route('stripe.checkout', [
     'price' => $reservationData['total_cost'], 
     'product' => $reservationData['vehicle_id']// or whatever field contains the vehicle name
-]);
-}
+    ]);
+    }
 }

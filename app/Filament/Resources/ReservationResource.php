@@ -2,16 +2,20 @@
 
 namespace App\Filament\Resources;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Collection;
+use Closure;
+
+
 use App\Filament\Resources\ReservationResource\Pages;
 use App\Filament\Resources\ReservationResource\RelationManagers;
-use App\Models\Reservation;
+
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -19,10 +23,11 @@ use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
-use Closure;
 use Filament\Forms\Components\TextInput;
+
 use App\Models\Vehicle;
-use Illuminate\Support\Collection;
+use App\Models\Reservation;
+
 
 class ReservationResource extends Resource
 {
@@ -60,7 +65,7 @@ class ReservationResource extends Resource
                         $set('daily_rate', $vehicle->daily_rate);
                     }
                 }),
-// In your form schema:
+
     DatePicker::make('start_date')
     ->label('Start Date')
     ->default(now()->toDateString())
@@ -101,22 +106,21 @@ class ReservationResource extends Resource
         }
     }),
 
-Forms\Components\TextInput::make('total_cost')
+    TextInput::make('total_cost')
     ->label('Total Cost')
-    ->reactive()
-  ,
+    ->reactive(),
 
-        // Status (dropdown)
-        Select::make('status')
-            ->label('Status')
-            ->options([
-                'pending' => 'Pending',
-                'confirmed' => 'Confirmed',
-                'cancelled' => 'Cancelled',
-            ])
-            ->default('pending')
-            ->required(),
-            ]);
+    // Status (dropdown)
+    Select::make('status')
+        ->label('Status')
+        ->options([
+            'pending' => 'Pending',
+            'confirmed' => 'Confirmed',
+            'cancelled' => 'Cancelled',
+        ])
+        ->default('pending')
+        ->required(),
+        ]);
     }
 
     public static function table(Table $table): Table
@@ -124,49 +128,48 @@ Forms\Components\TextInput::make('total_cost')
         return $table
             ->columns([
             
+            // User ID
+            TextColumn::make('user.name')
+                ->label('User Name')
+                ->sortable()
+                ->searchable(),
   
-              // User ID
-              TextColumn::make('user.name')
-                  ->label('User Name')
-                  ->sortable()
-                  ->searchable(),
+            TextColumn::make('vehicle.brand')
+            ->label('Vehicle')
+            ->formatStateUsing(function ($state, Reservation $record) {
+                return "{$record->vehicle->brand} {$record->vehicle->model} ({$record->vehicle->registration_number})";
+            })
+            ->sortable()
+            ->searchable(),
   
-                  TextColumn::make('vehicle.brand')
-                  ->label('Vehicle')
-                  ->formatStateUsing(function ($state, Reservation $record) {
-                      return "{$record->vehicle->brand} {$record->vehicle->model} ({$record->vehicle->registration_number})";
-                  })
-                  ->sortable()
-                  ->searchable(),
-  
-              // Start Date
-              TextColumn::make('start_date')
-                  ->label('Start Date')
-                  ->default(now()->toDateString())
-                  ->date()
-                  ->sortable(),
-  
-              // End Date
-              TextColumn::make('end_date')
-                  ->label('End Date')
-                  ->date()
-                  ->sortable(),
-  
-              // Total Cost
-              TextColumn::make('total_cost')
-                  ->label('Total Cost')
-                  ->money('USD') // Format as currency
-                  ->sortable(),
-  
-              // Status
-              TextColumn::make('status')
-                  ->label('Status')
-                  ->badge()
-                  ->color(fn (string $state): string => match ($state) {
-                      'pending' => 'warning',
-                      'confirmed' => 'success',
-                      'cancelled' => 'danger',
-                  }),
+            // Start Date
+            TextColumn::make('start_date')
+                ->label('Start Date')
+                ->default(now()->toDateString())
+                ->date()
+                ->sortable(),
+
+            // End Date
+            TextColumn::make('end_date')
+                ->label('End Date')
+                ->date()
+                ->sortable(),
+
+            // Total Cost
+            TextColumn::make('total_cost')
+                ->label('Total Cost')
+                ->money('USD') // Format as currency
+                ->sortable(),
+
+            // Status
+            TextColumn::make('status')
+                ->label('Status')
+                ->badge()
+                ->color(fn (string $state): string => match ($state) {
+                    'pending' => 'warning',
+                    'confirmed' => 'success',
+                    'cancelled' => 'danger',
+                }),
             ])
             ->filters([
                 //
