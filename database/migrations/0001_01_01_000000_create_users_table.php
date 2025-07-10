@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('phone_number', 15)->nullable();
             $table->string('address', 255)->nullable();
             $table->string('role')->default(User::ROLE_DEFAULT);
+            $table->string('google_id')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->rememberToken();
