@@ -13,7 +13,9 @@ class VehicleController extends Controller
 
     function vehicles()
     {
-        $vehicles = Vehicle::paginate(6);
+
+        $vehicles = Vehicle::with('images')->paginate(3);
+
         return view('vehicles', compact('vehicles'));
     }
     function homeVehicles()

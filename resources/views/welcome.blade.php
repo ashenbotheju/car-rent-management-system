@@ -23,6 +23,19 @@
                     </div> --}}
                 </div>
             </div>
+
+      </div>
+      
+    @if(session('success'))
+        <script>
+          alert("{{ session('success') }}");
+        </script>
+    @endif
+    @if (Route::has('login'))
+        <div class="h-14.5 hidden lg:block"></div>
+    @endif
+@endsection
+
         </div>
 
         <!-- Your existing content here -->

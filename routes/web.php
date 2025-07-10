@@ -21,12 +21,12 @@ Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/register', [HomeController::class, 'register'])->name('register');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
-// Vehicle Routes
-Route::get('/vehicles', [VehicleController::class, 'vehicles'])->name('showVehicles');
-Route::get('/vehicles/{vehicle_id}', [VehicleController::class, 'vehicleDetails'])->name('vehicle.details');
-Route::get('/', [VehicleController::class, 'homeVehicles'])->name('home');
 
-// Information Pages
+// Public Vehicle & Info Routes
+Route::get('/vehicles/{vehicle_id}', [VehicleController::class, 'vehicleDetails'])->name('vehicle.details');
+
+Route::get('/vehicl', [VehicleController::class, 'vehicles'])->name('showVehicles');
+
 Route::get('/support', [HomeController::class, 'showSupport'])->name('showSupport');
 Route::get('/contact', [HomeController::class, 'showContact'])->name('showContact');
 Route::get('/about', [HomeController::class, 'showAbout'])->name('showAbout');
@@ -82,4 +82,10 @@ Route::get('/print-daily-revenue', function () {
 // Debug Route (remove in production)
 Route::get('/test', function () {
     return view('test');
+});
+
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe')->name('stripe.index');
+    Route::get('stripe/checkout', 'stripeCheckout')->name('stripe.checkout');
+    Route::get('stripe/checkout/success', 'stripeCheckoutSuccess')->name('stripe.checkout.success');
 });

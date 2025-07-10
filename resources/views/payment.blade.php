@@ -25,6 +25,11 @@
         </button>
     </form>
 
+    @if(session('error2'))
+    <script>
+        alert("{{ session('error2') }}");
+    </script>
+    @endif
     <script>
         const stripe = Stripe('{{ config('services.stripe.key') }}');
         const elements = stripe.elements();
