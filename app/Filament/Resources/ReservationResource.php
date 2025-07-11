@@ -80,7 +80,7 @@ class ReservationResource extends Resource
     ->rules([
         function (Get $get) {
             return function (string $attribute, $value, Closure $fail) use ($get) {
-                if ($get('start_date') && $value <= $get('start_date')) {
+                if ($get('start_date') && $value < $get('start_date')) {
                     $fail('The end date must be after the start date.');
                 }
             };
@@ -124,8 +124,6 @@ Forms\Components\TextInput::make('total_cost')
     {
         return $table
             ->columns([
-            
-  
               // User ID
               TextColumn::make('user.name')
                   ->label('User Name')
@@ -171,6 +169,9 @@ Forms\Components\TextInput::make('total_cost')
             ])
             ->filters([
                 //
+                Filter::make('end_date_today')
+                    ->label('Today Completed')
+                    ->query(fn (Builder $query) => $query->whereDate('end_date', now()->toDateString())),
             
        
             ])
