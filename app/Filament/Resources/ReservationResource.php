@@ -95,6 +95,7 @@ class ReservationResource extends Resource
     
         if ($startDate && $endDate && $dailyRate) {
             $days = (new \DateTime($endDate))->diff(new \DateTime($startDate))->days;
+            $days++;
             $set('total_cost', $days * $dailyRate);
         } else {
             $set('total_cost', 0);
@@ -155,7 +156,7 @@ Forms\Components\TextInput::make('total_cost')
               // Total Cost
               TextColumn::make('total_cost')
                   ->label('Total Cost')
-                  ->money('USD') // Format as currency
+                  ->money('LKR') // Format as currency
                   ->sortable(),
   
               // Status
