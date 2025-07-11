@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
 use Laravel\Socialite\Facades\Socialite;
 
 use App\Models\User;
+
 use App\Models\Reservation;
 
 use App\Http\Controllers\HomeController;
@@ -16,20 +18,34 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\StripePaymentController;
 
-// Auth Routes
+use Laravel\Socialite\Facades\Socialite;
+
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/register', [HomeController::class, 'register'])->name('register');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
-// Google Authentication Routes
+
+// Public Vehicle & Info Routes
+Route::get('/vehicles/{vehicle_id}', [VehicleController::class, 'vehicleDetails'])->name('vehicle.details');
+
+Route::get('/vehicl', [VehicleController::class, 'vehicles'])->name('showVehicles');
+
+Route::get('/support', [HomeController::class, 'showSupport'])->name('showSupport');
+Route::get('/contact', [HomeController::class, 'showContact'])->name('showContact');
+Route::get('/about', [HomeController::class, 'showAbout'])->name('showAbout');
+
+// Booking
+Route::get('/reservation', [BookingController::class, 'CreateBooking'])->name('booking.create');
+
+// Google OAuth
+
 Route::middleware(['guest'])->group(function () {
     Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 });
 
 
-// Email Verification View (for Authenticated Users)
 Route::middleware(['auth'])->group(function () {
     Route::get('/email/verify', function () {
         return view('auth.verify-email');
@@ -38,7 +54,9 @@ Route::middleware(['auth'])->group(function () {
 
 // Verified User Routes
 Route::middleware(['auth', 'verified'])->group(function () {
+
     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+
 });
 
 // Public Vehicle & Info Routes
@@ -60,6 +78,7 @@ Route::get('/payment', function () {
     return view('payment');
 })->name('payment');
 
+
 Route::controller(StripePaymentController::class)->group(function(){
     Route::get('stripe', 'stripe')->name('stripe.index');
     Route::get('stripe/checkout', 'stripeCheckout')->name('stripe.checkout');
@@ -67,7 +86,7 @@ Route::controller(StripePaymentController::class)->group(function(){
 });
 
 
-// Revenue Report
+
 Route::get('/print-daily-revenue', function () {
     $records = Reservation::query()
         ->selectRaw('DATE(created_at) as day, SUM(total_cost) as revenue')
@@ -75,6 +94,7 @@ Route::get('/print-daily-revenue', function () {
         ->groupBy('day')
         ->orderBy('day', 'desc')
         ->get();
+
     return view('reports.daily-revenue', compact('records'));
 })->name('print.daily.revenue');
 
@@ -83,3 +103,8 @@ Route::get('/test', function () {
     return view('test');
 });
 
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe')->name('stripe.index');
+    Route::get('stripe/checkout', 'stripeCheckout')->name('stripe.checkout');
+    Route::get('stripe/checkout/success', 'stripeCheckoutSuccess')->name('stripe.checkout.success');
+});
