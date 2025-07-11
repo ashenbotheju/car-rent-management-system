@@ -3,7 +3,7 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\VehicleResource\Pages;
-
+use App\Models\Vehicle;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -12,33 +12,29 @@ use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\ImageColumn;
-use Filament\Tables\Filters\Filter; 
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Select;
+use Filament\Tables\Filters\Filter;
 
-use App\Models\Vehicle;
 
 class VehicleResource extends Resource
 {
     protected static ?string $model = Vehicle::class;
     protected static ?string $navigationIcon = 'heroicon-o-truck';
     protected static ?int $navigationSort = 0;
-
     public static function form(Form $form): Form
     {
         return $form
         ->schema([
-            TextInput::make('brand') // Changed from 'make' to 'brand'
+            Forms\Components\TextInput::make('brand') // Changed from 'make' to 'brand'
                 ->label('Brand')
                 ->required()
                 ->maxLength(50),
         
-            TextInput::make('model')
+            Forms\Components\TextInput::make('model')
                 ->label('Model')
                 ->required()
                 ->maxLength(50),
         
-            TextInput::make('year')
+            Forms\Components\TextInput::make('year')
             ->label('Year')
             ->required()
             ->numeric()
@@ -50,8 +46,8 @@ class VehicleResource extends Resource
                 'max:'.now()->year, // Dynamic current year validation
                 'gt:1980' // Explicit greater than 1980 rule
             ]),
-
-            TextInput::make('color')
+        
+            Forms\Components\TextInput::make('color')
                 ->label('Color')
                 ->required()
                 ->maxLength(20)
@@ -88,7 +84,7 @@ class VehicleResource extends Resource
                 ->native(false) // Optional: forces use of custom select UI
         ,
         
-            Select::make('engine')
+            Forms\Components\Select::make('engine')
             ->label('engine Type')
             ->options([
                 'auto' => 'Auto',
@@ -123,13 +119,13 @@ class VehicleResource extends Resource
                 ->helperText('Maximum 4 images allowed') // Optional helper text
                 ,
         
-            TextInput::make('registration_number')
+            Forms\Components\TextInput::make('registration_number')
                 ->label('Registration Number')
                 ->required()
                 ->unique(ignoreRecord: true)
                 ->maxLength(20),
         
-            TextInput::make('mileage')
+                Forms\Components\TextInput::make('mileage')
                 ->label('Mileage (km)')
                 ->numeric()
                 ->minValue(0)
@@ -146,22 +142,22 @@ class VehicleResource extends Resource
                 ->default(0)
                 ->helperText('Current vehicle mileage in kilometers'),
         
-            TextInput::make('fuel_efficiency')
-                ->label('Efficiency')
-                ->numeric()
-                ->required()
-                ->minValue(0)
-                ->maxValue(85) // Adjust based on realistic values
-                ->step(0.1) // Allows decimal values
-                ->suffix('km/l') // Visual indicator
-                ->rules([
-                    'numeric',
-                    'min:0',
-                    'max:50'
-                ])
-                ->helperText('Fuel consumption in kilometers per liter'),
+                Forms\Components\TextInput::make('fuel_efficiency')
+    ->label('Efficiency')
+    ->numeric()
+    ->required()
+    ->minValue(0)
+    ->maxValue(85) // Adjust based on realistic values
+    ->step(0.1) // Allows decimal values
+    ->suffix('km/l') // Visual indicator
+    ->rules([
+        'numeric',
+        'min:0',
+        'max:50'
+    ])
+    ->helperText('Fuel consumption in kilometers per liter'),
 
-            TextInput::make('daily_rate')
+            Forms\Components\TextInput::make('daily_rate')
                 ->label('Daily Rate')
                 ->required()
                 ->numeric()
@@ -176,7 +172,9 @@ class VehicleResource extends Resource
 
     public static function table(Table $table): Table
     {
-    return $table
+      
+
+return $table
     ->columns([
         TextColumn::make('vehicle_id')
             ->label('ID')
@@ -224,22 +222,23 @@ class VehicleResource extends Resource
             ->copyMessage('Registration number copied')
             ->copyMessageDuration(1500),
 
-        TextColumn::make('seats')
-        ->label('Seats')
-        ->numeric()
-        ->sortable()
-        ->icon('heroicon-o-users')
-        ->alignCenter(),
-
-        TextColumn::make('fuel_efficiency')
-        ->label('Efficiency')
-        ->sortable()
-        ->suffix(' km/l'),
-        
-        TextColumn::make('engine')
-        ->label('Engine')
-        ->sortable()
-        ->searchable(),
+     
+            
+            TextColumn::make('seats')
+            ->label('Seats')
+            ->numeric()
+            ->sortable()
+            ->icon('heroicon-o-users')
+            ->alignCenter(),
+            TextColumn::make('fuel_efficiency')
+    ->label('Efficiency')
+    ->sortable()
+    ->suffix(' km/l'),
+            TextColumn::make('engine')
+    ->label('Engine')
+    ->sortable()
+    ->searchable(),
+    //->description(fn (Vehicle $record): string => $record->fuel_efficiency ?? ''),
 
         TextColumn::make('daily_rate')
             ->label('Daily Rate')
@@ -262,18 +261,17 @@ class VehicleResource extends Resource
     ])
     
          
-    ->filters([
-        //
-                ])
-    ->actions([
-        Tables\Actions\EditAction::make(),
-    ])
-    ->bulkActions([
-        Tables\Actions\BulkActionGroup::make([
-            Tables\Actions\DeleteBulkAction::make(),
-        ]),
-    ]);
-    
+            ->filters([
+                //
+                        ])
+            ->actions([
+                Tables\Actions\EditAction::make(),
+            ])
+            ->bulkActions([
+                Tables\Actions\BulkActionGroup::make([
+                    Tables\Actions\DeleteBulkAction::make(),
+                ]),
+            ]);
     }
 
     public static function getRelations(): array
