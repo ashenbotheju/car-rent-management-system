@@ -18,7 +18,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\StripePaymentController;
 
-use Laravel\Socialite\Facades\Socialite;
+
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
