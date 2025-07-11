@@ -63,7 +63,6 @@ class VehicleResource extends Resource
             ->options([
                 'petrol' => 'Petrol',
                 'diesel' => 'Diesel',
-                'gas' => 'Gas',
                 'electric' => 'Electric',
             ])
             ->nullable()
@@ -148,15 +147,15 @@ class VehicleResource extends Resource
     ->numeric()
     ->required()
     ->minValue(0)
-    ->maxValue(85) // Adjust based on realistic values
+    ->maxValue(40) // Adjust based on realistic values
     ->step(0.1) // Allows decimal values
-    ->suffix('km/l') // Visual indicator
+    ->suffix('km per one unit') // Visual indicator
     ->rules([
         'numeric',
         'min:0',
-        'max:50'
+        'max:40'
     ])
-    ->helperText('Fuel consumption in kilometers per liter'),
+    ->helperText('Fuel consumption in kilometers per one unit'),
 
      Forms\Components\Toggle::make('is_available')
                 ->label('Is Available')
@@ -166,7 +165,7 @@ class VehicleResource extends Resource
                 ->label('Daily Rate')
                 ->required()
                 ->numeric()
-                ->minValue(0)
+                ->minValue(1000)
                 ->prefix('LKR')
         
            
@@ -195,7 +194,16 @@ return $table
             ->label('Year')
             ->sortable()
             ->searchable()
-            ->alignCenter(),
+            ->alignCenter()
+            ->formatStateUsing(function ($state) {
+            // Ensure year is a 4-digit integer between 1980 and current year
+            $year = (int) $state;
+            $currentYear = (int) now()->year;
+            if ($year >= 1980 && $year <= $currentYear && preg_match('/^\d{4}$/', (string)$year)) {
+                return $year;
+            }
+            return 'Invalid';
+            }),
 
         ImageColumn::make('featured_image')  // Changed to use the accessor
             ->label('Image')
