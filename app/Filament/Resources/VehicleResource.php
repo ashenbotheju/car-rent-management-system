@@ -24,6 +24,11 @@ class VehicleResource extends Resource
     {
         return $form
         ->schema([
+               Forms\Components\TextInput::make('registration_number')
+                ->label('Registration Number')
+                ->required()
+                ->unique(ignoreRecord: true)
+                ->maxLength(20),
             Forms\Components\TextInput::make('brand') // Changed from 'make' to 'brand'
                 ->label('Brand')
                 ->required()
@@ -85,7 +90,7 @@ class VehicleResource extends Resource
         ,
         
             Forms\Components\Select::make('engine')
-            ->label('engine Type')
+            ->label('Transmission Type')
             ->options([
                 'auto' => 'Auto',
                 'manual' => 'Manual',
@@ -119,11 +124,7 @@ class VehicleResource extends Resource
                 ->helperText('Maximum 4 images allowed') // Optional helper text
                 ,
         
-            Forms\Components\TextInput::make('registration_number')
-                ->label('Registration Number')
-                ->required()
-                ->unique(ignoreRecord: true)
-                ->maxLength(20),
+         
         
                 Forms\Components\TextInput::make('mileage')
                 ->label('Mileage (km)')
@@ -157,16 +158,18 @@ class VehicleResource extends Resource
     ])
     ->helperText('Fuel consumption in kilometers per liter'),
 
+     Forms\Components\Toggle::make('is_available')
+                ->label('Is Available')
+                ->default(true),
+
             Forms\Components\TextInput::make('daily_rate')
                 ->label('Daily Rate')
                 ->required()
                 ->numeric()
                 ->minValue(0)
-                ->prefix('LKR'),
+                ->prefix('LKR')
         
-            Forms\Components\Toggle::make('is_available')
-                ->label('Is Available')
-                ->default(true),
+           
         ]);
     }
 
@@ -176,13 +179,13 @@ class VehicleResource extends Resource
 
 return $table
     ->columns([
-        TextColumn::make('vehicle_id')
-            ->label('ID')
-            ->sortable()
-            ->searchable()
-          ,
+        // TextColumn::make('vehicle_id')
+        //     ->label('ID')
+        //     ->sortable()
+        //     ->searchable()
+        //   ,
         TextColumn::make('brand')  // Changed from 'make' to 'brand'
-            ->label('Brand')
+            ->label('Vehicle')
             ->sortable()
             ->searchable()
             ->weight('medium')  // Makes text slightly bold
@@ -218,6 +221,7 @@ return $table
         TextColumn::make('registration_number')
             ->label('Reg No')
             ->searchable()
+             ->sortable()
             ->copyable()  // Allows copying with click
             ->copyMessage('Registration number copied')
             ->copyMessageDuration(1500),
@@ -235,7 +239,7 @@ return $table
     ->sortable()
     ->suffix(' km/l'),
             TextColumn::make('engine')
-    ->label('Engine')
+    ->label('Transmission')
     ->sortable()
     ->searchable(),
     //->description(fn (Vehicle $record): string => $record->fuel_efficiency ?? ''),
