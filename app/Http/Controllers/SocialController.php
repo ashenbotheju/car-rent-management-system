@@ -20,29 +20,22 @@ class SocialController extends Controller
         try {
             $googleUser = Socialite::driver('google')->user();
 
+            // Check if the user already exists in the database
             $user = User::updateOrCreate(
-                ['email' => $googleUser->email],
+                ['email' => $googleUser->getEmail()],
                 [
-                    'name' => $googleUser->name,
-                    'email' => $googleUser->email,
-                    'google_id' => $googleUser->id,
-                    'password' => bcrypt(str()->random(24)),
-                    'email_verified_at' => now(),
+                    'name' => $googleUser->getName(),
+                    'google_id' => $googleUser->getId(),
+                    'password' => bcrypt(str()->random(24)), // Generate a random password
                 ]
             );
 
-            Auth::login($user, true); // Force persistent session
+            // Log in the user
+            Auth::login($user);
 
-            // Debugging check (temporary)
-            if (Auth::check()) {
-                return redirect()->intended('/'); // Go directly to authenticated page
-            }
-
-            return redirect('/'); // Fallback if auth fails
-
+            return redirect('/dashboard');
         } catch (\Exception $e) {
-            logger()->error('Google Auth Error: ' . $e->getMessage());
-            return redirect('/login')->with('error', 'Google login failed');
+            return redirect('/login')->with('error', 'Failed to authenticate with Google.');
         }
     }
 }

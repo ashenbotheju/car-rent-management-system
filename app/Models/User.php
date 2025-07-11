@@ -12,7 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable implements FilamentUser, MustVerifyEmail
+class User extends Authenticatable implements FilamentUser,MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -34,8 +34,7 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
         'name',
         'email',
         'password',
-        'role',
-        'google_id',
+        'role', // Make sure role is fillable
     ];
 
     // Mutator to ensure role is always stored in uppercase
@@ -62,11 +61,6 @@ class User extends Authenticatable implements FilamentUser, MustVerifyEmail
     public function canAccessPanel(Panel $panel): bool
     {
         return $this->isAdmin(); // Use the case-insensitive check
-    }
-
-    public function hasVerifiedEmail()
-    {
-        return !is_null($this->email_verified_at) || !is_null($this->google_id);
     }
 
     protected $hidden = [
