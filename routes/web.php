@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 use App\Models\Reservation;
 use App\Models\User;
 use App\Http\Controllers\HomeController;
@@ -12,21 +13,18 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SocialController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\StripePaymentController;
-use App\Http\Controllers\TestimonialController;
 use Laravel\Socialite\Facades\Socialite;
 
-// Public Routes
+// Home Routes
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/register', [HomeController::class, 'register'])->name('register');
 Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 
-
 // Public Vehicle & Info Routes
 Route::get('/vehicles/{vehicle_id}', [VehicleController::class, 'vehicleDetails'])->name('vehicle.details');
 
 Route::get('/vehicl', [VehicleController::class, 'vehicles'])->name('showVehicles');
-
 Route::get('/support', [HomeController::class, 'showSupport'])->name('showSupport');
 Route::get('/contact', [HomeController::class, 'showContact'])->name('showContact');
 Route::get('/about', [HomeController::class, 'showAbout'])->name('showAbout');
@@ -39,6 +37,7 @@ Route::middleware(['guest'])->group(function () {
     Route::get('auth/google', [SocialController::class, 'redirectToGoogle'])->name('google.redirect');
     Route::get('auth/google/callback', [SocialController::class, 'handleGoogleCallback'])->name('google.callback');
 });
+
 
 // Authenticated Routes
 Route::middleware(['auth'])->group(function () {
@@ -53,7 +52,8 @@ Route::middleware(['auth'])->group(function () {
 
 // Verified User Routes
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Additional verified-only routes can be added here
+    Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+    // Add more verified-user routes here
 });
 
 // Payment Routes
@@ -63,6 +63,13 @@ Route::post('/stripe-payment/{id}', [StripePaymentController::class, 'processPay
 Route::get('/payment', function () {
     return view('payment');
 })->name('payment');
+
+Route::controller(StripePaymentController::class)->group(function(){
+    Route::get('stripe', 'stripe')->name('stripe.index');
+    Route::get('stripe/checkout', 'stripeCheckout')->name('stripe.checkout');
+    Route::get('stripe/checkout/success', 'stripeCheckoutSuccess')->name('stripe.checkout.success');
+});
+
 
 // Testimonials
 Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
@@ -75,7 +82,6 @@ Route::get('/print-daily-revenue', function () {
         ->groupBy('day')
         ->orderBy('day', 'desc')
         ->get();
-
     return view('reports.daily-revenue', compact('records'));
 })->name('print.daily.revenue');
 
@@ -84,8 +90,3 @@ Route::get('/test', function () {
     return view('test');
 });
 
-Route::controller(StripePaymentController::class)->group(function(){
-    Route::get('stripe', 'stripe')->name('stripe.index');
-    Route::get('stripe/checkout', 'stripeCheckout')->name('stripe.checkout');
-    Route::get('stripe/checkout/success', 'stripeCheckoutSuccess')->name('stripe.checkout.success');
-});
