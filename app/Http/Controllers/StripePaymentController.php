@@ -52,6 +52,7 @@ public function stripeCheckoutSuccess(Request $request)
     } else {
         return redirect()->route('home')->with('error', 'Reservation not found.');
     }
+    //mail function
     return redirect()->route('home')->with('success', 'Payment successful.');
 }
 }
