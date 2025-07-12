@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Styles-->
-    @notifyCss
+   
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     @else
@@ -1535,7 +1535,7 @@
     @stack('modals')
     @livewireScripts
     <script src="{{ asset('js/chat-widget.js') }}"></script>
-    @notifyJs
+   
 </body>
 
 </html>
