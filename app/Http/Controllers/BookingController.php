@@ -23,7 +23,9 @@ public function CreateBooking(Request $request)
 
     // Check if the vehicle is already booked during the selected period
     $conflict = Reservation::where('vehicle_id', $validatedData['vehicle_id'])
-        ->where('status', '!=', 'cancelled') // optional if you want to allow reuse after cancellation
+        ->where('status', '=', 'confirmed') // optional if you want to allow reuse after cancellation
+        //reuse pending
+
         ->where(function ($query) use ($startDate, $endDate) {
             $query->whereDate('start_date', '<=', $endDate)
                   ->whereDate('end_date', '>=', $startDate);
