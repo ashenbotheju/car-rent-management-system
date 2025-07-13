@@ -1,5 +1,12 @@
 <?php
 
+
+
+use Illuminate\Http\Request;
+
+
+
+
 use App\Models\User;
 use App\Models\Reservation;
 
@@ -89,15 +96,87 @@ Route::controller(StripePaymentController::class)->group(function () {
 
 
 
-Route::get('/print-daily-revenue', function () {
-    $records = Reservation::query()
-        ->selectRaw('DATE(created_at) as day, SUM(total_cost) as revenue')
-        ->where('status', 'confirmed')
-        ->groupBy('day')
-        ->orderBy('day', 'desc')
-        ->get();
-
-    return view('reports.daily-revenue', compact('records'));
+Route::get('/revenue-report', function (Request $request) {
+    $groupBy = $request->input('group_by', 'day');
+    $selectedMonth = $request->input('month');
+    $selectedYear = $request->input('year');
+    
+    // Debug: Log the request parameters
+    \Log::info('Revenue Report Request:', [
+        'group_by' => $groupBy,
+        'month' => $selectedMonth,
+        'year' => $selectedYear,
+        'all_params' => $request->all()
+    ]);
+    
+    $query = Reservation::where('status', 'confirmed');
+    
+    switch ($groupBy) {
+        case 'year':
+            $query->selectRaw('YEAR(created_at) as period, SUM(total_cost) as revenue')
+                ->groupBy('period')->orderBy('period', 'desc');
+            $title = 'Yearly Revenue Report';
+            break;
+            
+        case 'month':
+            $query->selectRaw('DATE_FORMAT(created_at, "%Y-%m") as period,
+                SUM(total_cost) as revenue,
+                YEAR(created_at) as year,
+                MONTH(created_at) as month')
+                ->groupBy('period', 'year', 'month')
+                ->orderBy('period', 'desc');
+            $title = 'Monthly Revenue Report';
+            break;
+            
+        default: // day
+            // Apply month filter if provided
+            if ($selectedMonth) {
+                $query->whereMonth('created_at', $selectedMonth);
+                \Log::info('Applied month filter: ' . $selectedMonth);
+            }
+            
+            // Apply year filter if provided
+            if ($selectedYear) {
+                $query->whereYear('created_at', $selectedYear);
+                \Log::info('Applied year filter: ' . $selectedYear);
+            }
+            
+            $query->selectRaw('DATE(created_at) as period, SUM(total_cost) as revenue')
+                ->groupBy('period')
+                ->orderBy('period', 'desc');
+            $title = 'Daily Revenue Report';
+            
+            // Add month/year to title if filtered
+            if ($selectedMonth || $selectedYear) {
+                $titleParts = [];
+                if ($selectedMonth) {
+                    $titleParts[] = date('F', mktime(0, 0, 0, $selectedMonth, 1));
+                }
+                if ($selectedYear) {
+                    $titleParts[] = $selectedYear;
+                }
+                $title .= ' - ' . implode(' ', $titleParts);
+            }
+            break;
+    }
+    
+    // Debug: Log the final query
+    \Log::info('Final Query SQL: ' . $query->toSql());
+    \Log::info('Query Bindings: ', $query->getBindings());
+    
+    $records = $query->paginate(15);
+    
+    // Debug: Log the results
+    \Log::info('Records found: ' . $records->count());
+    \Log::info('Total records: ' . $records->total());
+    
+    return view('reports.daily-revenue', [
+        'records' => $records,
+        'groupBy' => $groupBy,
+        'selectedMonth' => $selectedMonth,
+        'selectedYear' => $selectedYear,
+        'title' => $title
+    ]);
 })->name('print.daily.revenue');
 
 
