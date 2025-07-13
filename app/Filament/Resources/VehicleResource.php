@@ -176,13 +176,22 @@ class VehicleResource extends Resource
     {
       
 
-return $table
+    return $table
     ->columns([
         // TextColumn::make('vehicle_id')
         //     ->label('ID')
         //     ->sortable()
         //     ->searchable()
         //   ,
+
+            TextColumn::make('registration_number')
+            ->label('Reg No')
+            ->searchable()
+             ->sortable()
+            ->copyable()  // Allows copying with click
+            ->copyMessage('Registration number copied')
+            ->copyMessageDuration(1500),
+            
         TextColumn::make('brand')  // Changed from 'make' to 'brand'
             ->label('Vehicle')
             ->sortable()
@@ -226,13 +235,7 @@ return $table
                 default => 'primary',
             }),
 
-        TextColumn::make('registration_number')
-            ->label('Reg No')
-            ->searchable()
-             ->sortable()
-            ->copyable()  // Allows copying with click
-            ->copyMessage('Registration number copied')
-            ->copyMessageDuration(1500),
+    
 
      
             

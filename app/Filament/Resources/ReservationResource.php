@@ -125,15 +125,25 @@ Forms\Components\TextInput::make('total_cost')
         return $table
             ->columns([
               // User ID
+                TextColumn::make('reservation_id')
+                  ->label('ID')
+                  ->sortable()
+                  ->searchable(),
+                  
               TextColumn::make('user.name')
                   ->label('User Name')
+                  ->sortable()
+                  ->searchable(),
+
+                    TextColumn::make('vehicle.registration_number')
+                  ->label('Reg_Number')
                   ->sortable()
                   ->searchable(),
   
                   TextColumn::make('vehicle.brand')
                   ->label('Vehicle')
                   ->formatStateUsing(function ($state, Reservation $record) {
-                      return "{$record->vehicle->brand} {$record->vehicle->model} ({$record->vehicle->registration_number})";
+                      return "{$record->vehicle->brand} {$record->vehicle->model}";
                   })
                   ->sortable()
                   ->searchable(),
@@ -161,6 +171,8 @@ Forms\Components\TextInput::make('total_cost')
               TextColumn::make('status')
                   ->label('Status')
                   ->badge()
+                  ->sortable()
+                    ->searchable()
                   ->color(fn (string $state): string => match ($state) {
                       'pending' => 'warning',
                       'confirmed' => 'success',
@@ -168,13 +180,42 @@ Forms\Components\TextInput::make('total_cost')
                   }),
             ])
             ->filters([
-                //
-                Filter::make('end_date_today')
-                    ->label('Today Completed')
-                    ->query(fn (Builder $query) => $query->whereDate('end_date', now()->toDateString())),
-            
-       
-            ])
+    Filter::make('end_date_today')
+        ->label('Today Completed')
+        ->query(fn (Builder $query) => $query->whereDate('end_date', now()->toDateString())),
+    
+    SelectFilter::make('status')
+        ->label('Status')
+        ->options([
+            'pending' => 'Pending',
+            'confirmed' => 'Confirmed',
+            'cancelled' => 'Cancelled',
+        ]),
+    
+    // Filter::make('date_range')
+    //     ->label('Date Range')
+    //     ->form([
+    //         DatePicker::make('start_date')
+    //                ->label('Start Date')
+    //             ->default('2025-01-01')
+    //             ->displayFormat('Y-m-d') // Explicit format
+    //          ,
+    //         DatePicker::make('end_date')
+    //             ->label('End Date')
+    //                      ->default('2025-01-01') ,
+    //     ])
+    //     ->query(function (Builder $query, array $data) {
+    //         return $query
+    //             ->when(
+    //                 $data['start_date'],
+    //                 fn (Builder $query, $date) => $query->whereDate('start_date', '>=', $date)
+    //             )
+    //             ->when(
+    //                 $data['end_date'],
+    //                 fn (Builder $query, $date) => $query->whereDate('end_date', '<=', $date)
+    //             );
+    //     })
+]) // This closes the filters array
             ->actions([
                 Tables\Actions\EditAction::make(),
             ])
