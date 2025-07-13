@@ -1,29 +1,32 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
-
-use Laravel\Socialite\Facades\Socialite;
-
 use App\Models\User;
-
 use App\Models\Reservation;
 
+use Illuminate\Support\Facades\Auth;
+
+use Illuminate\Support\Facades\Route;
+
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\BookingController;
+
 use App\Http\Controllers\MailController;
+use Laravel\Socialite\Facades\Socialite;
 use App\Http\Controllers\SocialController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\TestimonialController;
 use App\Http\Controllers\StripePaymentController;
+use App\Http\Controllers\Admin\DashboardController;
 
 
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
 Route::get('/login', [HomeController::class, 'login'])->name('login');
 Route::get('/register', [HomeController::class, 'register'])->name('register');
-Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
+//Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
+// Testimonials
+//Route::post('/testimonials', [TestimonialController::class, 'store'])->name('testimonials.store');
 
 
 // Public Vehicle & Info Routes
@@ -56,7 +59,6 @@ Route::middleware(['auth'])->group(function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
-
 });
 
 // Public Vehicle & Info Routes
@@ -79,7 +81,7 @@ Route::get('/payment', function () {
 })->name('payment');
 
 
-Route::controller(StripePaymentController::class)->group(function(){
+Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe.index');
     Route::get('stripe/checkout', 'stripeCheckout')->name('stripe.checkout');
     Route::get('stripe/checkout/success', 'stripeCheckoutSuccess')->name('stripe.checkout.success');
@@ -98,12 +100,8 @@ Route::get('/print-daily-revenue', function () {
     return view('reports.daily-revenue', compact('records'));
 })->name('print.daily.revenue');
 
-// Debug/Test Route (optional - remove in production)
-Route::get('/test', function () {
-    return view('test');
-});
 
-Route::controller(StripePaymentController::class)->group(function(){
+Route::controller(StripePaymentController::class)->group(function () {
     Route::get('stripe', 'stripe')->name('stripe.index');
     Route::get('stripe/checkout', 'stripeCheckout')->name('stripe.checkout');
     Route::get('stripe/checkout/success', 'stripeCheckoutSuccess')->name('stripe.checkout.success');
