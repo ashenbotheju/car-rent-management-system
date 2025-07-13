@@ -230,7 +230,7 @@
         <div class="vehicle-container">
             <!-- Vehicle Gallery -->
             <div class="vehicle-gallery">
-                <img id="main-image" src="{{$vehicle->image_1}}" alt="" class="main-image">
+                <img id="main-image" src="{{ asset('storage/' . $vehicle->images->first()->url) }}" alt="" class="main-image">
                
                 <div class="thumbnail-container">
                     @foreach($vehicle->images as $image)
@@ -353,7 +353,7 @@
                     <ul>
                         @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
-                @endforeach
+                        @endforeach
                     </ul>
                 </div>
                 @endif
@@ -381,7 +381,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (start && end) {
             const startDate = new Date(start);
             const endDate = new Date(end);
-            let days = (endDate - startDate) / (1000 * 60 * 60 * 24);
+            let days = (endDate - startDate) / (1000 * 60 * 60 * 24)+1;
             days = Math.ceil(days);
             if (days > 0) {
                 const total = days * dailyRate;
