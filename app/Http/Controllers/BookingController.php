@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Reservation;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BookingController extends Controller
 
@@ -40,18 +41,18 @@ public function CreateBooking(Request $request)
     $days = Carbon::parse($startDate)->diffInDays(Carbon::parse($endDate)) + 1;
     $totalCost = $validatedData['daily_rate'] * $days;
 
-    // Create reservation
-    if (!auth()->check()) {
+    if (!Auth::check()) {
         return redirect()->back()->with('error2', 'You must be logged in to make a reservation.');
     }
     $reservationData = [
-        'user_id'     => auth()->user()->id,
+        'user_id'     => Auth::user()->id,
         'vehicle_id'  => $validatedData['vehicle_id'],
         'start_date'  => $startDate,
         'end_date'    => $endDate,
         'total_cost'  => $totalCost,
         'status'      => 'pending',
     ];
+
 
     $result = Reservation::create($reservationData);
 
@@ -60,7 +61,7 @@ public function CreateBooking(Request $request)
     //     'total_cost' => $result->total_cost
     // ]);
  return redirect()->route('stripe.checkout', [
-    'price' => $reservationData['total_cost'], 
+    'price' => $reservationData['total_cost'],
     'product' => $reservationData['vehicle_id']// or whatever field contains the vehicle name
 ]);
 }

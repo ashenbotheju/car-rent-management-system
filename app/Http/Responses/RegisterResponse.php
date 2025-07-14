@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Responses;
+use Laracasts\Flash\Flash;
 
 use Laravel\Fortify\Contracts\RegisterResponse as RegisterResponseContract;
 
@@ -14,9 +15,11 @@ class RegisterResponse implements RegisterResponseContract
      */
     public function toResponse($request)
     {
+        Flash::success('Registration successful! Please log in to continue.');
         return redirect()->route('login')->with([
+            'toast_success' => 'Registration successful! Please log in to continue.',
             'status' => 'Registration successful! Please log in to continue.',
-            'registered_email' => $request->email 
+            'registered_email' => $request->email
         ]);
     }
 }
