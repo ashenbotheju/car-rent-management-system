@@ -66,8 +66,11 @@ class StripePaymentController extends Controller
     }
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     //mail function
     return redirect()->route('home')->with('success', 'Payment successful.');
+=======
+>>>>>>> Stashed changes
 =======
 >>>>>>> Stashed changes
 =======
