@@ -1,8 +1,4 @@
 <x-guest-layout>
-    @push('styles')
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
-    @endpush
-
     <div class="flex min-h-screen items-center justify-center dark:bg-gray-900">
         <div class="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-md p-8">
             <!-- Logo -->
@@ -18,9 +14,12 @@
                 Please enter your details to sign in.
             </p>
 
-            <!-- Success Message (now using Toastr) -->
+            <!-- Success Message (after registration, password reset, etc.) -->
             @if (session('status'))
-                @toastr(session('status'), 'success')
+                <div
+                    class="mb-4 p-4 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 rounded-lg text-sm">
+                    {{ session('status') }}
+                </div>
             @endif
 
             <!-- Google Login Button -->
@@ -46,11 +45,13 @@
             <form method="POST" action="{{ route('login') }}" class="mt-6">
                 @csrf
 
-                <!-- Error Messages (now using Toastr) -->
+                <!-- Error Messages -->
                 @if ($errors->any())
-                    @foreach ($errors->all() as $error)
-                        @toastr($error, 'error')
-                    @endforeach
+                    <div class="mb-4 p-4 bg-red-100 dark:bg-red-900 text-red-700 dark:text-red-300 rounded-lg text-sm">
+                        @foreach ($errors->all() as $error)
+                            <p>{{ $error }}</p>
+                        @endforeach
+                    </div>
                 @endif
 
                 <!-- Email -->
@@ -99,9 +100,4 @@
             </p>
         </div>
     </div>
-
-    @push('scripts')
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
-        @toastr_render
-    @endpush
 </x-guest-layout>

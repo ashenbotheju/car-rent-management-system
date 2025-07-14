@@ -1,4 +1,6 @@
 @include('components.chat-widget')
+@include('flash::message')
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -14,6 +16,8 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
+
     <!-- Styles-->
 
     @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
@@ -1537,8 +1541,93 @@
     <script src="{{ asset('js/chat-widget.js') }}"></script>
 
     <!-- Toastr JS -->
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>   
+=======
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+>>>>>>> Stashed changes
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+=======
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+=======
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+>>>>>>> Stashed changes
+=======
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+>>>>>>> Stashed changes
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<<<<<<< Updated upstream
+<<<<<<< Updated upstream
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+=======
+>>>>>>> Stashed changes
+
+    <script>
+        @if (session('toast_success'))
+            toastr.success("{{ session('toast_success') }}");
+        @endif
+
+        @if (session('toast_error'))
+            toastr.error("{{ session('toast_error') }}");
+        @endif
+    </script>
+    @if (session('toast_success'))
+        <script>
+            window.onload = () => {
+                Toastify({
+                    text: "{{ session('toast_success') }}",
+                    duration: 5000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#28a745",
+                }).showToast();
+            };
+        </script>
+    @endif
+    @if (session('toast_error'))
+        <script>
+            window.onload = () => {
+                Toastify({
+                    text: "{{ session('toast_error') }}",
+                    duration: 5000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#dc3545",
+                }).showToast();
+            };
+        </script>
+    @endif
+    @if ($errors->any())
+        <script>
+            window.onload = () => {
+                Toastify({
+                    text: "{{ $errors->first() }}",
+                    duration: 5000,
+                    close: true,
+                    gravity: "top",
+                    position: "right",
+                    backgroundColor: "#ffc107",
+                }).showToast();
+            };
+        </script>
+    @endif
 
 
 </body>

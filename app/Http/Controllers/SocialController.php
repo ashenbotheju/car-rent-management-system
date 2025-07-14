@@ -5,37 +5,50 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Hash;
 
 class SocialController extends Controller
 {
-    // Redirect user to Google login
     public function redirectToGoogle()
     {
         return Socialite::driver('google')->redirect();
     }
 
-    // Handle Google callback after authentication
+
     public function handleGoogleCallback()
     {
         try {
             $googleUser = Socialite::driver('google')->user();
 
-            // Check if the user already exists in the database
-            $user = User::updateOrCreate(
-                ['email' => $googleUser->getEmail()],
-                [
-                    'name' => $googleUser->getName(),
-                    'google_id' => $googleUser->getId(),
-                    'password' => bcrypt(str()->random(24)), // Generate a random password
-                ]
-            );
+            // Find or create user
+            $user = User::findByGoogleIdOrEmail($googleUser) ?? $this->createUserFromGoogle($googleUser);
 
-            // Log in the user
-            Auth::login($user);
+            // Update Google data if needed
+            if (empty($user->google_id)) {
+                $user->updateGoogleData($googleUser);
+            }
 
-            return redirect('/dashboard');
+            Auth::login($user, true);
+
+            return redirect()
+                ->intended('/')
+                ->with('status', 'Logged in with Google successfully!');
         } catch (\Exception $e) {
-            return redirect('/login')->with('error', 'Failed to authenticate with Google.');
+            logger()->error('Google Auth Failed: ' . $e->getMessage());
+            return redirect('/login')
+                ->with('error', 'Google authentication failed. Please try again.');
         }
+    }
+
+    protected function createUserFromGoogle($googleUser): User
+    {
+        return User::create([
+            'name' => $googleUser->getName(),
+            'email' => $googleUser->getEmail(),
+            'google_id' => $googleUser->getId(),
+            'password' => bcrypt(str()->random(24)),
+            'email_verified_at' => now(),
+            'role' => User::ROLE_USER,
+        ]);
     }
 }
